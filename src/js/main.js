@@ -22,6 +22,7 @@ import { initCalculators } from "./calculators.js";
 import { initMonitor } from "./monitor.js";
 import { initHeroCards } from "./hero-cards.js";
 import { initHeroLedger } from "./hero-ledger.js";
+import { initHeroVideo } from "./hero-video.js";
 import { initForm } from "./form.js";
 
 const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -55,4 +56,5 @@ initCalculators(tax);
 initMonitor({ reduce });
 initHeroCards({ reduce, vatRate });
 initForm(site);
-initHeroLedger({ reduce, vatRate });
+const ledger = initHeroLedger({ reduce, vatRate });
+initHeroVideo({ reduce, ledger });

@@ -84,3 +84,5 @@
 .toast-ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
 .toast-ico.done{background:var(--ok-soft);color:var(--ok)}
 #toastTxt{font-size:var(--t-sm);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Higgsfield videosu .plane-wrap ilə eyni sahəni tutur */
+.hero-video{position:absolute;top:-12%;left:-10%;width:128%;height:130%;object-fit:cover;pointer-events:none;mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%);-webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%)}
