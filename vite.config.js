@@ -10,7 +10,8 @@ function contactApi() {
     try { process.loadEnvFile(); } catch { /* .env yoxdur */ }
     const env = process.env;
     const handler = createContactHandler({
-      mailer: createMailer(env),
+      // vite preview NODE_ENV=production qoyur, amma bu server həmişə lokaldır — outbox rejimi açıq qalsın
+      mailer: createMailer({ ...env, NODE_ENV: "development" }),
       limiter: createRateLimiter({ max: Number(env.RATE_LIMIT_MAX || 5), windowMs: Number(env.RATE_LIMIT_WINDOW_MIN || 10) * 60 * 1000 })
     });
     server.middlewares.use("/api/muraciet", (req, res) => handler(req, res));
