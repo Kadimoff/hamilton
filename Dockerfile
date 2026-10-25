@@ -10,7 +10,8 @@ RUN npm run build
 # 2) runtime: yalnız dist/ + server/ + istehsal asılılıqları (nodemailer)
 FROM node:24-alpine
 WORKDIR /app
-ENV NODE_ENV=production HOST=0.0.0.0 PORT=3000 TRUST_PROXY=1
+# HOST=:: — həm IPv6, həm IPv4 (Coolify healthcheck "localhost"-u ::1 kimi yoxlayır)
+ENV NODE_ENV=production HOST=:: PORT=3000 TRUST_PROXY=1
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 COPY server ./server
