@@ -25,10 +25,17 @@
 <meta name="twitter:description" content="{{site.description}}">
 <meta name="twitter:image" content="{{site.url}}/og-image.png">
 
+<link rel="stylesheet" href="/src/styles/main.css">
+<noscript><style>.loader{display:none}</style></noscript>
 <!-- render:jsonld -->
 <script type="module" src="/src/js/main.js"></script>
 </head>
 <body>
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <span class="loader-mk"><svg width="26" height="26" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14M15 3v14M5 10h10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/><path class="loader-line" d="M2 10h16" stroke="#D9981F" stroke-width="1.2" stroke-dasharray="1.5 2" fill="none"/></svg></span>
+  <span class="loader-txt">Yüklənir…</span>
+  <span class="loader-bar" aria-hidden="true"><i></i></span>
+</div>
 
 <header class="top">
   <div class="wrap">

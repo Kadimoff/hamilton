@@ -89,3 +89,13 @@
 .mini-bars i{flex:1;border-radius:3px 3px 0 0;background:color-mix(in srgb,var(--accent) 40%,var(--surface));transform-origin:bottom;animation:barg 5s var(--ease) infinite}
 .mini-bars i:last-child{background:var(--accent)}
 @keyframes barg{0%{transform:scaleY(.1)}30%,85%{transform:scaleY(1)}100%{transform:scaleY(.1)}}
+
+/* mobil düzəlişlər */
+.card-h .idx{white-space:nowrap}
+@media (max-width:420px){
+  .ledger-mini{font-size:.68rem}
+  .ledger-mini .h,.ledger-mini .r{grid-template-columns:36px minmax(0,1fr) 66px 66px;gap:6px}
+  .ledger-mini .h{font-size:.58rem;letter-spacing:.03em}
+  .ledger-mini .n{white-space:nowrap}
+  .card{padding:18px}
+}

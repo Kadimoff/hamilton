@@ -1,0 +1,18 @@
+/* ---------- yüklənmə ekranı: şriftlər və JS hazır olana qədər ---------- */
+.loader{position:fixed;inset:0;z-index:100;display:grid;place-content:center;justify-items:center;gap:14px;background:var(--bg);transition:opacity .35s var(--ease),visibility .35s}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mk{width:56px;height:56px;border-radius:16px;background:var(--ink);display:grid;place-items:center;box-shadow:var(--shadow);animation:loader-pop .9s var(--ease) infinite alternate}
+.loader-line{animation:loader-dash 1.2s linear infinite}
+.loader-txt{font:600 var(--t-sm)/1 var(--f-body);color:var(--mute);letter-spacing:.02em}
+.loader-bar{width:120px;height:3px;border-radius:3px;background:var(--line);overflow:hidden}
+.loader-bar i{display:block;height:100%;width:40%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--gold));animation:loader-bar 1.1s var(--ease) infinite}
+@keyframes loader-pop{from{transform:scale(.94)}to{transform:scale(1)}}
+@keyframes loader-dash{to{stroke-dashoffset:-7}}
+@keyframes loader-bar{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+/* JS ümumiyyətlə yüklənməsə belə ekran 6 saniyədən sonra özü açılır */
+.loader{animation:loader-auto .3s 6s forwards}
+@keyframes loader-auto{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion:reduce){
+  .loader{animation:loader-auto .01s 6s forwards!important}
+  .loader-mk,.loader-line,.loader-bar i{animation:none!important}
+}

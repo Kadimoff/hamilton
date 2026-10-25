@@ -1,19 +1,3 @@
-import "../styles/fonts.css";
-import "../styles/tokens.css";
-import "../styles/base.css";
-import "../styles/sections/header.css";
-import "../styles/sections/hero.css";
-import "../styles/sections/tape.css";
-import "../styles/sections/services.css";
-import "../styles/sections/trio.css";
-import "../styles/sections/flow.css";
-import "../styles/sections/monitor.css";
-import "../styles/sections/tools.css";
-import "../styles/sections/faq.css";
-import "../styles/sections/contact.css";
-import "../styles/sections/footer.css";
-import "../styles/motion.css";
-
 import site from "../data/site.json";
 import tax from "../data/tax.json";
 import { $ } from "./lib/format.js";
@@ -24,6 +8,9 @@ import { initHeroCards } from "./hero-cards.js";
 import { initHeroLedger } from "./hero-ledger.js";
 import { initHeroVideo } from "./hero-video.js";
 import { initForm } from "./form.js";
+import { hideLoaderWhenReady } from "./loader.js";
+
+hideLoaderWhenReady(); // ilk iş: digər modullarda xəta olsa da yükləmə ekranı gizlənsin
 
 const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 const vatRate = tax.rates.vat.value;

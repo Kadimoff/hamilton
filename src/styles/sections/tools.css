@@ -47,3 +47,9 @@
 .dl-list .nm{font-size:var(--t-sm);font-weight:600}
 .dl-list .nm small{display:block;font-weight:500;color:var(--mute);font-size:.74rem}
 .dl-list .left{font:600 .72rem var(--f-mono);color:var(--accent);background:var(--accent-soft);padding:4px 8px;border-radius:999px;white-space:nowrap}
+
+/* mobil: təqvim başlığı və naviqasiya sıxılmasın */
+@media (max-width:480px){
+  .cal-head{flex-wrap:wrap}
+  .cal-nav{margin-left:auto}
+}

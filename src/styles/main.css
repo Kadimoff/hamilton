@@ -1,0 +1,17 @@
+/* Bütün stillər — index.html-də <head>-dəki <link> ilə yüklənir ki, səhifə heç vaxt stilsiz görünməsin */
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./sections/loader.css";
+@import "./sections/header.css";
+@import "./sections/hero.css";
+@import "./sections/tape.css";
+@import "./sections/services.css";
+@import "./sections/trio.css";
+@import "./sections/flow.css";
+@import "./sections/monitor.css";
+@import "./sections/tools.css";
+@import "./sections/faq.css";
+@import "./sections/contact.css";
+@import "./sections/footer.css";
+@import "./motion.css";
