@@ -33,3 +33,5 @@ form.req{background:var(--surface);border:1px solid var(--line);border-radius:24
 .info dd.act{justify-self:start}
 /* honeypot: insanlar görmür, botlar doldurur */
 .hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.info dd a{text-decoration:none}
+.info dd a:hover{text-decoration:underline;text-underline-offset:3px}

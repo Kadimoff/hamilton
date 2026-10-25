@@ -87,16 +87,3 @@
 /* Higgsfield videosu .plane-wrap ilə eyni sahəni tutur */
 .hero-video{position:absolute;top:-12%;left:-10%;width:128%;height:130%;object-fit:cover;pointer-events:none;mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%);-webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%)}
 
-/* ---------- mobil: hero kartları səliqəli şəbəkədə (üst-üstə düşmür) ---------- */
-@media (max-width:520px){
-  .ctas .btn{flex:1 1 100%}
-  .stage{height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"dead srv" "bal bal" "vat vat" "toast toast";gap:12px;padding-block:6px 4px}
-  .stage .fl{position:relative;inset:auto;width:auto;max-width:none;transform:none;min-width:0}
-  .stage .fl>.in{height:100%}
-  .f-dead{grid-area:dead}.f-srv{grid-area:srv}.f-bal{grid-area:bal}.f-vat{grid-area:vat}.f-toast{grid-area:toast}
-  .f-dead .tag,.f-srv .tag{display:none}
-  .f-vat .vat-row{flex-direction:row;align-items:center}
-  .f-vat .legend{max-width:220px}
-  .plane-wrap,.hero-video{opacity:.45}
-  .big{font-size:1.75rem}
-}

@@ -344,8 +344,8 @@
           <h2 class="h2">Vəziyyətinizi danışaq</h2>
           <p class="lede mt">Qısa müraciət göndərin, iş günü ərzində sizinlə əlaqə saxlayaq.</p>
           <dl class="info">
-            <div><dt>E-poçt</dt><dd id="mail">{{site.email}}</dd><dd class="act"><button class="copy" data-copy="mail" type="button">Kopyala</button></dd></div>
-            <div><dt>Telefon</dt><dd id="phone">{{site.phone.display}}</dd><dd class="act"><button class="copy" data-copy="phone" type="button">Kopyala</button></dd></div>
+            <div><dt>E-poçt</dt><dd id="mail"><a href="mailto:{{site.email}}">{{site.email}}</a></dd><dd class="act"><button class="copy" data-copy="mail" type="button">Kopyala</button></dd></div>
+            <div><dt>Telefon</dt><dd id="phone"><a href="tel:{{site.phone.e164}}">{{site.phone.display}}</a></dd><dd class="act"><button class="copy" data-copy="phone" type="button">Kopyala</button></dd></div>
             <div><dt>Ünvan</dt><dd>{{site.address.display}}</dd></div>
             <div><dt>İş saatı</dt><dd>{{site.hours.display}}</dd></div>
           </dl>
@@ -371,6 +371,12 @@
     </div>
   </section>
 </main>
+
+<!-- mobil: yapışan müraciət paneli (hero keçiləndən sonra görünür) -->
+<div class="m-cta" id="mCta">
+  <a class="btn btn-primary" href="#elaqe">Konsultasiya al <span class="arr">→</span></a>
+  <a class="btn btn-line m-call" href="tel:{{site.phone.e164}}" aria-label="Zəng edin: {{site.phone.display}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
+</div>
 
 <footer>
   <div class="wrap">

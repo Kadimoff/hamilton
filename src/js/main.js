@@ -9,6 +9,7 @@ import { initHeroLedger } from "./hero-ledger.js";
 import { initHeroVideo } from "./hero-video.js";
 import { initForm } from "./form.js";
 import { hideLoaderWhenReady } from "./loader.js";
+import { initMobileCta } from "./mobile-cta.js";
 
 hideLoaderWhenReady(); // ilk iş: digər modullarda xəta olsa da yükləmə ekranı gizlənsin
 
@@ -43,5 +44,6 @@ initCalculators(tax);
 initMonitor({ reduce });
 initHeroCards({ reduce, vatRate });
 initForm(site);
+initMobileCta();
 const ledger = initHeroLedger({ reduce, vatRate });
 initHeroVideo({ reduce, ledger });

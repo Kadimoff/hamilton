@@ -6,7 +6,9 @@ export function initHeroVideo({ reduce, ledger }) {
   const video = $("heroVideo");
   if (!video) return;
   const saveData = navigator.connection && navigator.connection.saveData;
-  if (reduce || saveData) { video.remove(); return; }
+  // mobildə hero canlı panelə çevrilir — videonu yükləmirik (trafik)
+  const small = window.matchMedia && matchMedia("(max-width:640px)").matches;
+  if (reduce || saveData || small) { video.remove(); return; }
 
   const plane = document.querySelector(".plane-wrap");
   let ready = false, inView = false;

@@ -116,3 +116,24 @@ test("SEO: meta, JSON-LD, sitemap, robots", async ({ page, request }) => {
   expect(await (await request.get("/robots.txt")).text()).toContain("Sitemap:");
   for (const f of ["/favicon.svg", "/apple-touch-icon.png", "/og-image.png"]) expect((await request.get(f)).status(), f).toBe(200);
 });
+
+test.describe("mobil yapışan panel", () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test("hero-da gizli, aşağıda görünür, əlaqə bölməsində gizlənir", async ({ page }) => {
+    await page.goto("/");
+    const bar = page.locator("#mCta");
+    await expect(bar).toBeHidden();
+    await page.locator("#yanasma").scrollIntoViewIfNeeded();
+    await expect(bar).toBeVisible();
+    await expect(bar.getByRole("link", { name: /Zəng edin/ })).toHaveAttribute("href", /^tel:\+994/);
+    await page.locator("#reqForm").scrollIntoViewIfNeeded();
+    await expect(bar).toBeHidden();
+  });
+});
+
+test("desktopda yapışan panel yoxdur", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/");
+  await page.locator("#yanasma").scrollIntoViewIfNeeded();
+  await expect(page.locator("#mCta")).toBeHidden();
+});

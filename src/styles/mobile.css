@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Mobil görünüş (≤640px). Desktop dizayna toxunmur — yalnız kiçik ekranlar.
+   Qaydalar: əsas məzmun öndə, toxunma sahəsi ≥44px, aralıq ≥8px,
+   əsas mətn 16px, dekorativ hərəkət sadələşdirilmiş.
+   ========================================================================== */
+
+/* yapışan alt panel — desktopda yoxdur */
+.m-cta{display:none}
+
+@media (max-width:640px){
+  /* ---------- ümumi ritm ---------- */
+  .band{padding-block:56px}
+  .sec-head{gap:10px;margin-bottom:28px}
+  .sec-head h2,.h2{font-size:1.75rem;line-height:1.12}
+  .lede{font-size:1.0625rem;line-height:1.6}
+  .eyebrow{font-size:.72rem}
+
+  /* ---------- başlıq ---------- */
+  .top .wrap{padding-block:10px}
+  .menu-btn{min-height:44px;padding:0 16px}
+  .nav a.lnk{min-height:48px;display:flex;align-items:center}
+  .nav .btn{min-height:48px}
+
+  /* ---------- hero ---------- */
+  .hero .wrap{padding-block:28px 36px;gap:28px}
+  .hero-copy{gap:20px}
+  .hero h1{font-size:clamp(2.15rem,10vw,2.75rem);line-height:1.06}
+  .hero .lede{font-size:1.0625rem}
+  .ctas{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+  .ctas .btn{min-height:52px;font-size:var(--t-md);border-radius:14px}
+  .svc-chips{display:none} /* xidmətlər bölməsi elə növbəti ekrandadır */
+
+  /* canlı panel: 5 üzən kart əvəzinə bir kart, bölmələr xətlə ayrılır */
+  .stage{height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;isolation:isolate}
+  .plane-wrap,.hero-video{opacity:0} /* canvas balans rəqəmlərini hesablamağa davam edir, amma görünmür */
+  .f-srv,.f-toast{display:none}
+  .stage .fl{position:relative;inset:auto;width:auto;max-width:none;transform:none;z-index:1}
+  .stage .fl>.in{background:none;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:16px 18px;animation:none}
+  .stage .fl+.fl>.in{border-top:1px solid var(--line)}
+  .stage .k{font-size:.78rem}
+  .stage .big{font-size:2rem;margin-top:6px}
+  .stage .rows{font-size:var(--t-md)}
+  .stage .rows b{font-size:.95rem}
+  .stage .diff{font-size:.8rem;padding:10px 12px}
+  .f-vat .vat-row{flex-direction:row;align-items:center;gap:18px}
+  .f-vat .legend{font-size:.8rem;gap:6px;max-width:240px}
+  .f-vat .legend b{font-size:.8rem}
+
+  /* ---------- xidmətlər ---------- */
+  .bento{gap:14px}
+  .card{padding:18px;gap:14px;border-radius:20px}
+  .card:hover{transform:none}
+  .card h3{font-size:1.25rem}
+  .card p.d{font-size:.9375rem;line-height:1.6}
+  .viz{min-height:0;padding:12px}
+  .feats{gap:6px}
+  .feats li{font-size:.8125rem;padding:6px 10px}
+  .card .more{min-height:44px;font-size:.9375rem}
+
+  /* ---------- niyə bir komanda ---------- */
+  .trio{gap:24px}
+  .venn{max-width:300px}
+  .points{margin-top:22px;gap:10px}
+  .point{padding:14px}
+
+  /* ---------- yanaşma: şaquli timeline ---------- */
+  .flow{gap:14px}
+  .flow li{grid-template-columns:44px minmax(0,1fr);column-gap:14px;row-gap:6px;padding:16px;border-radius:18px}
+  .flow .st{display:contents}
+  .flow .st .ic{grid-row:1/span 4;align-self:start}
+  .flow .st span:last-child{grid-column:2;font-size:.72rem}
+  .flow h3,.flow p,.flow .out{grid-column:2}
+  .flow p{font-size:.9375rem}
+  .flow li:not(:last-child)::before{content:"";position:absolute;left:37px;top:64px;bottom:-15px;width:2px;border-radius:2px;background:var(--accent-soft);z-index:1}
+
+  /* ---------- monitorinq ---------- */
+  .monitor{border-radius:20px}
+  .mon-top{padding:12px 16px}
+  .mon-grid>div{padding:16px}
+  .log{font-size:.72rem;height:212px}
+  .up-stats{gap:18px}
+
+  /* ---------- alətlər ---------- */
+  .tool{border-radius:20px;gap:16px}
+  .seg{display:flex;width:100%}
+  .seg button{flex:1 1 0;min-height:44px}
+  .res b{font-size:1.05rem}
+  .cal-nav button{width:44px;height:44px}
+
+  /* ---------- FAQ ---------- */
+  .acc summary{padding:16px 18px;min-height:56px}
+
+  /* ---------- CTA + əlaqə ---------- */
+  .cta-band{border-radius:22px;padding:28px 22px}
+  .cta-band .btn{min-height:48px}
+  .info{grid-template-columns:minmax(0,1fr);gap:10px}
+  .info dd a{text-decoration:none}
+  .copy{min-height:36px;padding:0 14px}
+  form.req{padding:20px;border-radius:20px}
+  .svc-pick span{min-height:44px;align-items:center;padding:0 14px}
+  .fld input,.fld select,.fld textarea{min-height:48px;font-size:16px} /* 16px: iOS avtomatik zoom etməsin */
+  .form-foot .btn{width:100%;min-height:52px;font-size:var(--t-md)}
+
+  /* ---------- footer ---------- */
+  footer{padding-block:44px 28px}
+  .f-grid{gap:28px}
+  footer ul{gap:4px}
+  footer ul a{display:inline-flex;min-height:36px;align-items:center}
+  .f-bot{flex-direction:column;gap:6px}
+
+  /* ---------- yapışan alt panel ---------- */
+  .m-cta{display:grid;grid-template-columns:minmax(0,1fr) 52px;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:35;
+    padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+    background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);
+    border-top:1px solid var(--line);box-shadow:0 -10px 30px -18px rgba(11,31,51,.35);
+    transform:translateY(110%);visibility:hidden;transition:transform .3s var(--ease),visibility .3s}
+  .m-cta.show{transform:none;visibility:visible}
+  .m-cta .btn{min-height:52px;font-size:var(--t-md);border-radius:14px}
+  .m-cta .m-call{padding:0;color:var(--accent)}
+}
+
+/* çox dar ekranlar (≤360px) */
+@media (max-width:360px){
+  .hero h1{font-size:2rem}
+  .f-vat .vat-row{gap:12px}
+  .donut{width:68px;height:68px}
+}
