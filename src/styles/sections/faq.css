@@ -1,0 +1,11 @@
+/* ---------- FAQ ---------- */
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,64px)}
+@media (max-width:900px){.faq{grid-template-columns:minmax(0,1fr)}}
+.acc{display:grid;gap:10px}
+.acc details{background:var(--bg);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s,background .2s}
+.acc details[open]{background:var(--surface);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:var(--shadow-sm)}
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;font-weight:600}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary i{font-style:normal;width:28px;height:28px;border-radius:8px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .3s var(--ease),background .2s}
+.acc details[open] summary i{transform:rotate(45deg);background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.acc details p{padding:0 20px 18px;color:var(--mute);font-size:var(--t-sm);max-width:68ch;animation:up .4s var(--ease)}

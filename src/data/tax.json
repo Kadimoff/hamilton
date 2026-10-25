@@ -1,0 +1,75 @@
+{
+  "_note": "Saytdakı bütün vergi dərəcələri və son tarixlər bu fayldan oxunur. Dəyəri dəyişəndə source və lastChecked sahələrini də yeniləyin.",
+  "rates": {
+    "vat": {
+      "label": "ƏDV",
+      "value": 0.18,
+      "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+      "lastChecked": "2026-10-25"
+    },
+    "profit": {
+      "label": "Mənfəət vergisi",
+      "value": 0.2,
+      "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+      "lastChecked": "2026-10-25"
+    }
+  },
+  "vatRegistrationThreshold": {
+    "_note": "Saytda hələ göstərilmir. Göstəriləcəksə, mənbə ilə birlikdə göstərin.",
+    "general": {
+      "value": 200000,
+      "unit": "AZN",
+      "period": "ardıcıl 12 aylıq dövr",
+      "source": "https://www.taxes.gov.az/az/post/4509",
+      "lastChecked": "2026-10-25"
+    },
+    "retailAndConsumerServices": {
+      "value": 400000,
+      "unit": "AZN",
+      "from": "2026",
+      "comment": "Pərakəndə ticarət və istehlak xidmətləri üçün; POS-terminalla nağdsız əməliyyatlar həddə azaldılmış qaydada hesablanır.",
+      "source": "https://www.taxes.gov.az/az/post/4509",
+      "lastChecked": "2026-10-25"
+    }
+  },
+  "deadlines": [
+    {
+      "id": "vat",
+      "title": "ƏDV bəyannaməsi və ödənişi",
+      "note": "Hər ayın 20-dək",
+      "short": "hər ayın 20-dək",
+      "dayLabel": "20-si",
+      "rule": { "type": "monthly", "day": 20 },
+      "highlight": false,
+      "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+      "lastChecked": "2026-10-25"
+    },
+    {
+      "id": "withholding",
+      "title": "Ödəmə mənbəyindən vergi bəyannaməsi",
+      "note": "Rübdən sonrakı ayın 20-dək",
+      "short": "rübdən sonrakı ayın 20-dək",
+      "rule": { "type": "quarterly", "day": 20 },
+      "highlight": false,
+      "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+      "lastChecked": "2026-10-25"
+    },
+    {
+      "id": "profit-annual",
+      "title": "Mənfəət vergisi illik bəyannaməsi",
+      "note": "İldən sonrakı ilin 31 martınadək",
+      "short": "31 martadək",
+      "rule": { "type": "yearly", "month": 3, "day": 31 },
+      "highlight": true,
+      "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+      "lastChecked": "2026-10-25"
+    }
+  ],
+  "nonWorkingDays": {
+    "_note": "Son tarix şənbə, bazar və ya holidays siyahısındakı günə düşərsə, növbəti iş gününə keçirilir. Bayram və köçürülmüş istirahət günlərini (YYYY-MM-DD) Nazirlər Kabinetinin illik qərarına görə əlavə edin.",
+    "shiftWeekends": true,
+    "holidays": [],
+    "source": "https://taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+    "lastChecked": "2026-10-25"
+  }
+}

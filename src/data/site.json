@@ -1,0 +1,33 @@
+{
+  "_note": "mock: true olduqda əlaqə məlumatları nümunədir. Real dəyərlər gələndə dəyişdirin və mock-u false edin.",
+  "mock": true,
+  "name": "Hamilton.az",
+  "url": "https://hamilton.az",
+  "title": "Hamilton.az — mühasibatlıq, vergi konsultasiyası, 1C və server xidmətləri | Bakı",
+  "description": "Hamilton.az — mühasibatlıq, vergi konsultasiyası, 1C və server xidmətləri, server təhlükəsizliyi və şirkətə özəl uçot sistemləri. Bakı.",
+  "slogan": "Rəqəmləriniz balansda, sistemləriniz qorunur.",
+  "email": "info@hamilton.az",
+  "phone": {
+    "display": "+994 12 000 00 00",
+    "e164": "+994120000000"
+  },
+  "address": {
+    "display": "Bakı, Azərbaycan",
+    "street": "Nümunə küçəsi 1",
+    "city": "Bakı",
+    "postalCode": "AZ1000",
+    "country": "AZ"
+  },
+  "hours": {
+    "display": "B.e. – Cümə, 09:00 – 18:00",
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "areaServed": ["Bakı", "Azərbaycan"],
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "linkedin": ""
+  }
+}

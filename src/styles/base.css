@@ -1,0 +1,43 @@
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--t-md);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.08;letter-spacing:-.025em;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:760px){.wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 var(--t-xs)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:2px}
+.lede{color:var(--mute);font-size:var(--t-lg);max-width:58ch}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(32px,4.5vw,52px);max-width:760px}
+.sec-head h2{font-size:var(--t-2xl)}
+.sec-head.row{max-width:none;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:14px 40px}
+@media (max-width:760px){.sec-head.row{grid-template-columns:minmax(0,1fr)}}
+.h2{font-size:var(--t-2xl);margin-top:14px}
+.lede.mt{margin-top:14px}
+section{scroll-margin-top:84px}
+
+
+/* ---------- düymələr ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.55em;padding:.9em 1.35em;border-radius:12px;font:600 var(--t-sm)/1 var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 10px 24px -10px var(--accent)}
+.btn-primary:hover{background:var(--accent-ink);box-shadow:0 16px 30px -12px var(--accent)}
+.btn-line{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn-line:hover{border-color:var(--ink)}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:var(--t-sm);font-weight:500;text-decoration:none;white-space:nowrap;transition:border-color .2s,transform .2s var(--ease),box-shadow .2s}
+a.chip:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:0;animation:ping 2s var(--ease) infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+
+/* ---------- bölmələr ---------- */
+.band{padding-block:clamp(64px,9vw,112px)}
+.band.white{background:var(--surface);border-block:1px solid var(--line)}

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{site.title}}</title>
+<meta name="description" content="{{site.description}}">
+<link rel="canonical" href="{{site.url}}/">
+<meta name="theme-color" content="#F3F6FA">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="az_AZ">
+<meta property="og:site_name" content="{{site.name}}">
+<meta property="og:url" content="{{site.url}}/">
+<meta property="og:title" content="{{site.title}}">
+<meta property="og:description" content="{{site.description}}">
+<meta property="og:image" content="{{site.url}}/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{site.name}} — {{site.slogan}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{site.title}}">
+<meta name="twitter:description" content="{{site.description}}">
+<meta name="twitter:image" content="{{site.url}}/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- render:jsonld -->
+<script type="module" src="/src/js/main.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Hamilton.az ana səhifə">
+      <span class="mk"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14M15 3v14M5 10h10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M2 10h16" stroke="#D9981F" stroke-width="1.2" stroke-dasharray="1.5 2" fill="none"/></svg></span>
+      <span>Hamilton<em>.az</em></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menyu</button>
+    <nav class="nav" id="nav" aria-label="Əsas menyu">
+      <a class="lnk" href="#xidmetler">Xidmətlər</a>
+      <a class="lnk" href="#yanasma">Yanaşma</a>
+      <a class="lnk" href="#monitorinq">Server</a>
+      <a class="lnk" href="#aletler">Kalkulyator</a>
+      <a class="lnk" href="#suallar">Suallar</a>
+      <a class="lnk" href="#elaqe">Əlaqə</a>
+      <a class="btn btn-primary" href="#elaqe">Konsultasiya al <span class="arr">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-label="Giriş">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="badge"><b><i class="pulse"></i>Bakı</b>Vergi konsultasiyası şirkəti</span>
+        <h1>
+          <span class="w">Rəqəmləriniz</span>
+          <span class="w hl" style="animation-delay:.08s">balansda,<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 120 4, 197 11"/></svg></span>
+          <span class="w" style="animation-delay:.16s">sistemləriniz</span>
+          <span class="w" style="animation-delay:.24s">qorunur.</span>
+        </h1>
+        <p class="lede">Hamilton.az mühasibatlıq, vergi konsultasiyası, 1C və server xidmətlərini bir müqavilə ilə aparır. Siz biznesinizlə məşğul olun, uçot və infrastruktur bizdədir.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#elaqe">Konsultasiya üçün müraciət <span class="arr">→</span></a>
+          <a class="btn btn-line" href="#xidmetler">Xidmətlərə bax</a>
+        </div>
+        <div class="svc-chips">
+          <span class="lbl">Xidmətlər</span>
+          <!-- render:svc-chips -->
+        </div>
+      </div>
+
+      <div class="stage" id="stage" role="group" aria-label="Canlı uçot animasiyası, nümunə məlumat">
+        <!-- render:hero-video -->
+        <div class="plane-wrap" aria-hidden="true"><div class="plane"><canvas id="ledger"></canvas></div></div>
+
+        <div class="fl f-dead"><div class="in">
+          <div class="k"><span>Növbəti son tarix</span><span class="tag">Təqvim</span></div>
+          <div class="big" id="dDays">—</div>
+          <div class="sub" id="dName">ƏDV bəyannaməsi</div>
+          <div class="bar"><i id="dBar" style="width:20%"></i></div>
+        </div></div>
+
+        <div class="fl f-bal"><div class="in">
+          <div class="k"><span>İkili yazılış</span><span class="tag">Canlı</span></div>
+          <div class="rows">
+            <div><span>Debet</span><b id="bD">0,00 ₼</b></div>
+            <div><span>Kredit</span><b id="bK">0,00 ₼</b></div>
+          </div>
+          <div class="diff ok" id="bDiff"><span id="bLbl">Balans tutur ✓</span><b id="bVal">0,00 ₼</b></div>
+        </div></div>
+
+        <div class="fl f-srv"><div class="in">
+          <div class="k"><span>1C serveri</span><span class="tag">CPU</span></div>
+          <div class="srv-top"><i class="dot pulse"></i>İşləyir <span class="sub" style="margin-left:auto" id="cpuTxt">34%</span></div>
+          <svg class="spark" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true"><path class="a" id="spA"/><path class="l" id="spL"/></svg>
+          <div class="sub">Son ehtiyat nüsxə: 03:00</div>
+        </div></div>
+
+        <div class="fl f-vat"><div class="in">
+          <div class="k"><span>{{tax.vat.label}} hesabı</span><span class="tag">{{tax.vat.pct}}</span></div>
+          <div class="vat-row">
+            <svg class="donut" viewBox="0 0 80 80" aria-hidden="true">
+              <circle class="bg" cx="40" cy="40" r="32"/>
+              <circle class="net" cx="40" cy="40" r="32" transform="rotate(-90 40 40)"/>
+              <circle class="vat" id="vatArc" cx="40" cy="40" r="32" transform="rotate(-90 40 40)" stroke-dasharray="{{sample.arcDash}}" stroke-dashoffset="{{sample.arcOffset}}"/>
+              <text x="40" y="45">{{tax.vat.pct}}</text>
+            </svg>
+            <div class="legend">
+              <div><i style="background:var(--accent)"></i>Məbləğ<b id="vN">{{sample.net0}}</b></div>
+              <div><i style="background:var(--gold)"></i>ƏDV<b id="vV">{{sample.vat0}}</b></div>
+              <div><i style="background:var(--ink)"></i>Cəmi<b id="vG">{{sample.gross0}}</b></div>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="fl f-toast"><div class="in">
+          <span class="toast-ico" id="toastIco"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h6l3 3v9H4z"/><path d="M10 2v3h3"/></svg></span>
+          <span id="toastTxt">ƏDV bəyannaməsi hazırlanır…</span>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tape" role="group" aria-label="Əsas göstəricilər">
+    <div class="tape-track">
+      <ul>
+        <li>{{tax.vat.label}} <b>{{tax.vat.pct}}</b></li><li>{{tax.profit.label}} <b>{{tax.profit.pct}}</b></li><li>ƏDV bəyannaməsi <b>{{deadline.vat.short}}</b></li><li>Mənfəət vergisi bəyannaməsi <b>{{deadline.profit.short}}</b></li><li><b>e-taxes.gov.az</b> üzərindən təqdimat</li><li><b>1C:Mühasibat</b> quraşdırma və dəstək</li><li>Ehtiyat nüsxə <b>3-2-1</b></li><li><b>VPN · Firewall · Monitorinq</b></li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>{{tax.vat.label}} <b>{{tax.vat.pct}}</b></li><li>{{tax.profit.label}} <b>{{tax.profit.pct}}</b></li><li>ƏDV bəyannaməsi <b>{{deadline.vat.short}}</b></li><li>Mənfəət vergisi bəyannaməsi <b>{{deadline.profit.short}}</b></li><li><b>e-taxes.gov.az</b> üzərindən təqdimat</li><li><b>1C:Mühasibat</b> quraşdırma və dəstək</li><li>Ehtiyat nüsxə <b>3-2-1</b></li><li><b>VPN · Firewall · Monitorinq</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ================= XİDMƏTLƏR (BENTO) ================= -->
+  <section class="band" id="xidmetler">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div style="display:grid;gap:14px">
+          <span class="eyebrow">Xidmətlər</span>
+          <h2>Beş xidmət, bir məsul komanda</h2>
+        </div>
+        <p class="lede" style="max-width:44ch">Uçot, vergi və İT ayrı podratçılara bölünəndə səhvlər aralarda itir. Biz hamısını bir yerdə aparırıq.</p>
+      </header>
+
+      <div class="bento">
+        <!-- render:services -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BİR KOMANDA ================= -->
+  <section class="band white">
+    <div class="wrap trio">
+      <svg class="venn rv" viewBox="0 0 420 380" role="img" aria-label="Uçot, vergi və İT sahələrinin kəsişməsində Hamilton.az">
+        <circle class="c1" cx="150" cy="140" r="110"/>
+        <circle class="c2" cx="270" cy="140" r="110"/>
+        <circle class="c3" cx="210" cy="240" r="110"/>
+        <text x="110" y="110">Uçot</text><text class="s" x="110" y="128">mühasibatlıq</text>
+        <text x="310" y="110">Vergi</text><text class="s" x="310" y="128">konsultasiya</text>
+        <text x="210" y="300">İT</text><text class="s" x="210" y="318">1C · server · təhlükəsizlik</text>
+        <circle class="core" cx="210" cy="172" r="38"/>
+        <text class="core-t" x="210" y="176">Hamilton</text>
+      </svg>
+      <div class="rv">
+        <span class="eyebrow">Niyə bir komanda</span>
+        <h2 class="h2">Uçot, vergi və server bir-birindən asılıdır</h2>
+        <p class="lede mt">Bəyannamə 1C-dəki məlumatdan yaranır, 1C isə serverdə işləyir. Biri dayananda o biriləri də dayanır.</p>
+        <div class="points">
+          <div class="point"><i style="background:var(--accent)"></i><b>Bir məsul komanda</b><span>Sualınız uçotla, vergi ilə və ya serverlə bağlı olsa da, eyni komandaya yazırsınız.</span></div>
+          <div class="point"><i style="background:var(--gold)"></i><b>Səhv aralarda itmir</b><span>Mühasib və İT mütəxəssisi eyni bazaya baxır, uyğunsuzluğu birlikdə həll edir.</span></div>
+          <div class="point"><i style="background:var(--ok)"></i><b>Məlumat qorunur</b><span>Maliyyə bazanız şifrəli kanalla əlçatandır və hər gecə ayrıca nüsxələnir.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROSES ================= -->
+  <section class="band" id="yanasma">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="eyebrow">Yanaşma</span>
+        <h2>Əməkdaşlıq dörd mərhələdə qurulur</h2>
+      </header>
+      <ol class="flow">
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><span>Mərhələ 1</span></div><h3>Diaqnostika</h3><p>Sənədləri, vergi tarixçəsini və server mühitini yoxlayırıq.</p><span class="out">Nəticə: risk siyahısı</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span>Mərhələ 2</span></div><h3>Plan</h3><p>Vergi təqvimi, uçot qaydaları və infrastruktur planını razılaşdırırıq.</p><span class="out">Nəticə: iş planı</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6-9 9H5v-6z"/></svg></span><span>Mərhələ 3</span></div><h3>Tətbiq</h3><p>Uçotu qaydaya salır, 1C-ni qurur, server qorunmasını tətbiq edirik.</p><span class="out">Nəticə: işlək sistem</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><span>Mərhələ 4</span></div><h3>Müşayiət</h3><p>Aylıq hesabat, bəyannamələr, monitorinq və yoxlamalarda dəstək.</p><span class="out">Nəticə: aylıq hesabat</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= MONİTORİNQ ================= -->
+  <section class="band white" id="monitorinq">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div style="display:grid;gap:14px">
+          <span class="eyebrow">1C və server</span>
+          <h2>Serverinizi gecə-gündüz izləyirik</h2>
+        </div>
+        <p class="lede" style="max-width:44ch">Müştəri serverinin vəziyyəti belə bir paneldə görünür. Aşağıdakı panel nümunə məlumatla işləyir.</p>
+      </header>
+      <div class="monitor rv">
+        <div class="mon-top"><span class="t">Server paneli</span><span class="tag">Nümunə məlumat</span><span class="live"><i class="dot pulse"></i>Canlı</span></div>
+        <div class="mon-grid">
+          <div class="m-gauges">
+            <div class="m-h"><b>Resurslar</b><span>avtomatik yenilənir</span></div>
+            <div class="gauges">
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg" id="gCpu" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="166"/><text x="50" y="56" id="gCpuT">34%</text></svg>CPU</div>
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg g" id="gRam" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="105"/><text x="50" y="56" id="gRamT">58%</text></svg>RAM</div>
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg o" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="95.5"/><text x="50" y="56">62%</text></svg>Disk</div>
+            </div>
+          </div>
+          <div class="m-uptime">
+            <div class="m-h"><b>Son 30 gün işləkliyi</b><span>hər zolaq bir gündür</span></div>
+            <div class="uptime" id="uptime"></div>
+            <div class="up-foot"><span>30 gün əvvəl</span><span>bu gün</span></div>
+            <div class="up-stats">
+              <div><b>29 / 30</b><span>tam işlək gün</span></div>
+              <div><b>03:00</b><span>gündəlik ehtiyat nüsxə</span></div>
+              <div><b>3 nüsxə</b><span>2 daşıyıcı, 1 kənarda</span></div>
+            </div>
+          </div>
+          <div class="m-log">
+            <div class="m-h"><b>Hadisələr jurnalı</b><span>yeni hadisələr yuxarıda</span></div>
+            <ul class="log" id="log"></ul>
+          </div>
+          <div class="m-checks">
+            <div class="m-h"><b>Qoruma tədbirləri</b><span>hamısı aktiv</span></div>
+            <ul class="toggles">
+              <li><span>Firewall<small>Yalnız lazımi portlar açıqdır</small></span><i class="sw"></i></li>
+              <li><span>VPN ilə giriş<small>Uzaqdan iş şifrəli kanalla</small></span><i class="sw"></i></li>
+              <li><span>RDP qoruması<small>Təkrarlanan cəhdlər bloklanır</small></span><i class="sw"></i></li>
+              <li><span>Ehtiyat nüsxə 3-2-1<small>Hər gecə 03:00</small></span><i class="sw"></i></li>
+              <li><span>Hüquq auditi<small>Rüblük yoxlama</small></span><i class="sw"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KALKULYATOR + TƏQVİM ================= -->
+  <section class="band" id="aletler">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="eyebrow">Alətlər</span>
+        <h2>Vergini hesablayın, son tarixi görün</h2>
+      </header>
+      <div class="tools">
+        <div class="tool rv">
+          <h3>Vergi kalkulyatoru</h3>
+          <div class="seg" role="tablist" aria-label="Kalkulyator növü">
+            <button role="tab" id="tabVat" aria-selected="true" aria-controls="calcVat">{{tax.vat.label}} {{tax.vat.pct}}</button>
+            <button role="tab" id="tabPro" aria-selected="false" aria-controls="calcPro" tabindex="-1">{{tax.profit.label}} {{tax.profit.pct}}</button>
+          </div>
+
+          <div class="pane" id="calcVat" role="tabpanel" aria-labelledby="tabVat">
+            <div class="fieldrow">
+              <div class="fld"><label for="vAmt">Məbləğ, ₼</label><input class="amt" id="vAmt" inputmode="decimal" value="10 000"></div>
+              <div class="fld"><label for="vMode">Məbləğə ƏDV</label>
+                <select id="vMode"><option value="ex">daxil deyil (üstünə gəl)</option><option value="in">daxildir (içindən çıxar)</option></select>
+              </div>
+            </div>
+            <div class="result">
+              <div class="res"><span>ƏDV-siz</span><b id="rNet">{{sample.net}}</b></div>
+              <div class="res"><span>{{tax.vat.label}} {{tax.vat.pct}}</span><b id="rVat">{{sample.vat}}</b></div>
+              <div class="res hi"><span>Cəmi</span><b id="rGross">{{sample.gross}}</b></div>
+            </div>
+            <div class="split" aria-hidden="true"><i class="a" id="sA" style="width:{{sample.netPct}}%"></i><i class="b" id="sB" style="width:{{sample.vatPct}}%"></i></div>
+          </div>
+
+          <div class="pane" id="calcPro" role="tabpanel" aria-labelledby="tabPro" hidden>
+            <div class="fieldrow">
+              <div class="fld"><label for="pInc">Gəlir, ₼</label><input class="amt" id="pInc" inputmode="decimal" value="250 000"></div>
+              <div class="fld"><label for="pExp">Çıxılan xərclər, ₼</label><input class="amt" id="pExp" inputmode="decimal" value="180 000"></div>
+            </div>
+            <div class="result">
+              <div class="res"><span>Vergi tutulan mənfəət</span><b id="pPro">70 000,00</b></div>
+              <div class="res"><span>Xalis mənfəət</span><b id="pNet">56 000,00</b></div>
+              <div class="res hi"><span>Mənfəət vergisi</span><b id="pTax">14 000,00</b></div>
+            </div>
+            <div class="split" aria-hidden="true"><i class="a" id="pA" style="width:80%"></i><i class="b" id="pB" style="width:20%"></i></div>
+          </div>
+          <p class="fine">Sadələşdirilmiş hesablamadır. Güzəştlər, azadolmalar və zərərin keçirilməsi nəzərə alınmır. Dəqiq hesab üçün bizimlə əlaqə saxlayın.</p>
+        </div>
+
+        <div class="tool rv">
+          <div class="cal-head">
+            <h3>Vergi təqvimi</h3>
+            <div class="cal-nav"><button type="button" id="calPrev" aria-label="Əvvəlki ay">‹</button><b id="calTitle">—</b><button type="button" id="calNext" aria-label="Növbəti ay">›</button></div>
+          </div>
+          <div class="calgrid" id="calGrid"></div>
+          <ul class="dl-list" id="dlList"></ul>
+          <p class="fine">Son tarix qeyri-iş gününə düşərsə, növbəti iş günü tətbiq olunur. Tarixləri taxes.gov.az üzrə yoxlayın.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="band white" id="suallar">
+    <div class="wrap faq">
+      <div class="rv">
+        <span class="eyebrow">Suallar</span>
+        <h2 class="h2">Tez-tez verilən suallar</h2>
+        <p class="lede mt">Cavabını tapmadığınız sual varsa, müraciət formasında yazın.</p>
+      </div>
+      <div class="acc rv">
+        <details open><summary>Hansı şirkətlərlə işləyirsiniz?<i aria-hidden="true">+</i></summary><p>Fərdi sahibkarlardan orta ölçülü şirkətlərə qədər. ƏDV ödəyicisi olan və olmayan, sadələşdirilmiş vergi rejimində işləyən bizneslərə xidmət göstəririk.</p></details>
+        <details><summary>Sənədləri necə təqdim edirəm?<i aria-hidden="true">+</i></summary><p>Elektron qaydada: e-poçt, paylaşılan qovluq və ya birbaşa 1C bazası vasitəsilə. Kağız sənədləri ofisə gətirmək də mümkündür.</p></details>
+        <details><summary>1C bazamız köhnə kompüterdədir. Serverə köçürmək olar?<i aria-hidden="true">+</i></summary><p>Bəli. Bazanın surətini çıxarırıq, yeni serverə və ya buluda köçürürük, istifadəçi hüquqlarını bərpa edir və ehtiyat nüsxəni qururuq. Köçürmə vaxtını iş dayanmasın deyə sizinlə razılaşdırırıq.</p></details>
+        <details><summary>Vergi yoxlaması gəlsə nə edirsiniz?<i aria-hidden="true">+</i></summary><p>Tələb olunan sənədləri hazırlayırıq, yoxlama zamanı sizi müşayiət edirik və yoxlama aktına cavab, lazım olduqda etiraz hazırlayırıq.</p></details>
+        <details><summary>Özəl uçot sisteminin hazırlanması nə qədər çəkir?<i aria-hidden="true">+</i></summary><p>Müddət tapşırığın həcmindən asılıdır. İlk görüşdən sonra proseslərinizi təhlil edib mərhələli plan və müddət təqdim edirik.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA + ƏLAQƏ ================= -->
+  <section class="band" id="elaqe">
+    <div class="wrap" style="display:grid;gap:clamp(48px,7vw,88px)">
+      <div class="cta-band rv">
+        <div>
+          <h2>İlk görüşdə uçotunuza, vergi risklərinizə və serverinizə baxaq</h2>
+          <p>Görüşdən sonra nəyin təcili olduğunu və nəyin gözləyə biləcəyini yazılı şəkildə alırsınız.</p>
+        </div>
+        <a class="btn" href="#reqForm">Görüş təyin et <span class="arr">→</span></a>
+      </div>
+
+      <div class="contact">
+        <div class="rv">
+          <span class="eyebrow">Əlaqə</span>
+          <h2 class="h2">Vəziyyətinizi danışaq</h2>
+          <p class="lede mt">Qısa müraciət göndərin, iş günü ərzində sizinlə əlaqə saxlayaq.</p>
+          <dl class="info">
+            <div><dt>E-poçt</dt><dd id="mail">{{site.email}}</dd><dd class="act"><button class="copy" data-copy="mail" type="button">Kopyala</button></dd></div>
+            <div><dt>Telefon</dt><dd id="phone">{{site.phone.display}}</dd><dd class="act"><button class="copy" data-copy="phone" type="button">Kopyala</button></dd></div>
+            <div><dt>Ünvan</dt><dd>{{site.address.display}}</dd></div>
+            <div><dt>İş saatı</dt><dd>{{site.hours.display}}</dd></div>
+          </dl>
+        </div>
+
+        <form class="req rv" id="reqForm" novalidate>
+          <fieldset class="svc-pick">
+            <legend>Hansı xidmət lazımdır?</legend>
+            <!-- render:svc-pick -->
+          </fieldset>
+          <div class="fld"><label for="f-name">Ad, soyad</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="fld"><label for="f-co">Şirkət</label><input id="f-co" name="company" autocomplete="organization"></div>
+          <div class="fld"><label for="f-tel">Telefon</label><input id="f-tel" name="phone" type="tel" autocomplete="tel" required placeholder="+994"></div>
+          <div class="fld"><label for="f-mail">E-poçt</label><input id="f-mail" name="email" type="email" autocomplete="email"></div>
+          <div class="fld wide"><label for="f-msg">Qısa məlumat</label><textarea id="f-msg" name="message" maxlength="2000" placeholder="Məsələn: 12 işçi, ƏDV ödəyicisi, 1C bazası ofis kompüterindədir"></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="f-web">Vebsayt</label><input id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Müraciəti göndər <span class="arr">→</span></button>
+            <span class="status" id="formStatus" role="status"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <a class="brand" href="#top" aria-label="Hamilton.az ana səhifə"><span class="mk"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14M15 3v14M5 10h10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></span><span>Hamilton.az</span></a>
+        <p>Mühasibatlıq, vergi konsultasiyası, 1C və server xidmətləri. Bakı.</p>
+      </div>
+      <div><h4>Xidmətlər</h4><ul><!-- render:footer-services --></ul></div>
+      <div><h4>Şirkət</h4><ul><li><a href="#yanasma">Yanaşma</a></li><li><a href="#monitorinq">Server paneli</a></li><li><a href="#aletler">Kalkulyator</a></li><li><a href="#suallar">Suallar</a></li></ul></div>
+      <div><h4>Əlaqə</h4><ul><li>{{site.email}}</li><li>{{site.phone.display}}</li><li>{{site.hours.display}}</li></ul></div>
+    </div>
+    <div class="f-bot"><span>© <span id="yr">{{year}}</span> Hamilton.az</span><span>Vergi konsultasiyası və mühasibatlıq</span></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+/* ---------- bir komanda (venn) ---------- */
+.trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media (max-width:900px){.trio{grid-template-columns:minmax(0,1fr)}}
+.venn{width:100%;max-width:470px;height:auto;justify-self:center;overflow:visible}
+.venn circle{stroke-width:1.5}
+.venn .c1{fill:color-mix(in srgb,var(--accent) 12%,transparent);stroke:var(--accent);animation:vf1 9s ease-in-out infinite}
+.venn .c2{fill:color-mix(in srgb,var(--gold) 16%,transparent);stroke:var(--gold);animation:vf2 9s ease-in-out infinite}
+.venn .c3{fill:color-mix(in srgb,var(--ok) 12%,transparent);stroke:var(--ok);animation:vf3 9s ease-in-out infinite}
+@keyframes vf1{50%{transform:translate(-5px,-4px)}}
+@keyframes vf2{50%{transform:translate(5px,-4px)}}
+@keyframes vf3{50%{transform:translate(0,6px)}}
+.venn text{font:600 15px var(--f-display);fill:var(--ink);text-anchor:middle}
+.venn text.s{font:500 11px var(--f-body);fill:var(--mute)}
+.venn .core{fill:var(--ink)}
+.venn text.core-t{fill:var(--surface);font:700 12px var(--f-display)}
+.points{display:grid;gap:12px;margin-top:28px}
+.point{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:16px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.point i{grid-row:1/3;width:12px;height:12px;border-radius:4px;margin-top:6px}
+.point b{font-weight:600}
+.point span{color:var(--mute);font-size:var(--t-sm)}

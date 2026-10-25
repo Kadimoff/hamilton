@@ -1,0 +1,9 @@
+/* ---------- lent ---------- */
+.tape{border-block:1px solid var(--line);background:var(--surface);overflow:hidden}
+.tape-track{display:flex;width:max-content;animation:marquee 50s linear infinite}
+.tape:hover .tape-track{animation-play-state:paused}
+.tape ul{display:flex;list-style:none;margin:0;padding:0}
+.tape li{display:flex;align-items:center;gap:10px;padding:16px 26px;font-size:var(--t-sm);color:var(--mute);white-space:nowrap}
+.tape li::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--gold);transform:rotate(45deg)}
+.tape li b{color:var(--ink);font-weight:600}
+@keyframes marquee{to{transform:translateX(-50%)}}

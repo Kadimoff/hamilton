@@ -1,0 +1,13 @@
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:color-mix(in srgb,var(--surface) 72%,transparent);padding-block:56px 32px}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:32px}
+@media (max-width:860px){.f-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.f-grid{grid-template-columns:minmax(0,1fr)}}
+footer .brand{color:var(--surface)}
+footer .brand .mk{background:var(--accent)}
+footer h4{font:600 var(--t-sm) var(--f-body);color:var(--surface);margin-bottom:12px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:var(--t-sm)}
+footer a{text-decoration:none}
+footer a:hover{color:var(--surface)}
+footer p{font-size:var(--t-sm);margin-top:14px;max-width:34ch}
+.f-bot{margin-top:40px;padding-top:20px;border-top:1px solid color-mix(in srgb,var(--surface) 14%,transparent);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:var(--t-xs)}
