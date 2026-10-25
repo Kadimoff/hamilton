@@ -29,3 +29,6 @@
   --t-2xl:clamp(1.75rem,3.4vw,2.6rem);--t-3xl:clamp(2.3rem,5.4vw,4.4rem);
   --max:1240px;--ease:cubic-bezier(.2,.75,.15,1);
 }
+/* Geniş ekranlarda məzmun ekranın daha çox hissəsini tutur */
+@media (min-width:1600px){:root{--max:1480px}}
+@media (min-width:2200px){:root{--max:1680px}}
