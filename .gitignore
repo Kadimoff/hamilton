@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.mail-outbox/
+test-results/
+playwright-report/
+lighthouse/
+assets-src/
+*.log
+.DS_Store

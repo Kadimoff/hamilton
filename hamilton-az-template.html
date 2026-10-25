@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamilton.az</title>
+<meta name="description" content="Hamilton.az — mühasibatlıq, vergi konsultasiyası, 1C və server xidmətləri, server təhlükəsizliyi və şirkətə özəl uçot sistemləri. Bakı.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Layout: açıq "kağız" fon; hero-da perspektivdə uzanan canlı ikili yazılış (debet/kredit) vərəqi + üzərində süzülən komponentlər; ardınca bento xidmətlər. */
+:root{
+  color-scheme: light;
+  --bg:#F3F6FA;        /* səhifə */
+  --surface:#FFFFFF;   /* kartlar */
+  --sunk:#EBF0F6;      /* kart içi vizual sahə */
+  --ink:#0B1F33;       /* mətn */
+  --mute:#5B6C7E;      /* ikinci mətn */
+  --line:#DCE4EC;      /* xətlər */
+  --accent:#2453FF;    /* kobalt — əsas vurğu */
+  --accent-ink:#1A3FCC;
+  --accent-soft:#E6ECFF;
+  --gold:#D9981F;      /* balans xətti */
+  --gold-ink:#9A6408;
+  --gold-soft:#FFF2D9;
+  --ok:#0E9F78;
+  --ok-soft:#DCF4EC;
+  --warn:#E0563B;
+  --warn-soft:#FDE7E2;
+  --on-accent:#FFFFFF;
+  --shadow:0 1px 2px rgba(11,31,51,.05),0 18px 40px -18px rgba(11,31,51,.22);
+  --shadow-sm:0 1px 2px rgba(11,31,51,.06),0 6px 16px -8px rgba(11,31,51,.14);
+
+  --f-display:"Geologica","Segoe UI",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --t-xs:.75rem;--t-sm:.875rem;--t-md:1rem;--t-lg:1.125rem;--t-xl:1.35rem;
+  --t-2xl:clamp(1.75rem,3.4vw,2.6rem);--t-3xl:clamp(2.3rem,5.4vw,4.4rem);
+  --max:1240px;--ease:cubic-bezier(.2,.75,.15,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--t-md);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--surface)}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.08;letter-spacing:-.025em;margin:0;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:760px){.wrap{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 var(--t-xs)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:2px}
+.lede{color:var(--mute);font-size:var(--t-lg);max-width:58ch}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(32px,4.5vw,52px);max-width:760px}
+.sec-head h2{font-size:var(--t-2xl)}
+.sec-head.row{max-width:none;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:14px 40px}
+@media (max-width:760px){.sec-head.row{grid-template-columns:minmax(0,1fr)}}
+.h2{font-size:var(--t-2xl);margin-top:14px}
+.lede.mt{margin-top:14px}
+section{scroll-margin-top:84px}
+
+/* ---------- düymələr ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.55em;padding:.9em 1.35em;border-radius:12px;font:600 var(--t-sm)/1 var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 10px 24px -10px var(--accent)}
+.btn-primary:hover{background:var(--accent-ink);box-shadow:0 16px 30px -12px var(--accent)}
+.btn-line{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn-line:hover{border-color:var(--ink)}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:var(--t-sm);font-weight:500;text-decoration:none;white-space:nowrap;transition:border-color .2s,transform .2s var(--ease),box-shadow .2s}
+a.chip:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;opacity:0;animation:ping 2s var(--ease) infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+
+/* ---------- başlıq ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.12rem/1 var(--f-display);letter-spacing:-.02em}
+.brand em{font-style:normal;color:var(--accent)}
+.brand .mk{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex:none}
+.nav{display:flex;align-items:center;gap:6px}
+.nav a.lnk{text-decoration:none;color:var(--mute);font-size:var(--t-sm);font-weight:500;padding:8px 12px;border-radius:8px;transition:background .2s,color .2s}
+.nav a.lnk:hover{background:var(--sunk);color:var(--ink)}
+.nav .btn{margin-left:10px;padding:.75em 1.1em}
+.menu-btn{display:none;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:9px 14px;font:600 var(--t-sm) var(--f-body);cursor:pointer}
+@media (max-width:980px){
+  .menu-btn{display:inline-flex}
+  .nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding:10px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px))}
+  .nav a.lnk{padding:13px 12px;font-size:var(--t-md)}
+  .nav .btn{margin:10px 0 0}
+  .nav:not(.open){display:none}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(60% 70% at 78% 40%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 70%),var(--bg)}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(color-mix(in srgb,var(--ink) 14%,transparent) 1px,transparent 1px);background-size:22px 22px;mask-image:linear-gradient(180deg,#000,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(40px,6vw,80px) clamp(36px,5vw,64px)}
+@media (max-width:980px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+.hero-copy{display:grid;gap:24px;align-content:center;position:relative;z-index:3}
+.badge{justify-self:start;display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:var(--t-sm);font-weight:500;box-shadow:var(--shadow-sm);animation:up .8s var(--ease) both}
+.badge b{display:inline-flex;align-items:center;gap:6px;background:var(--ok-soft);color:var(--ok);border-radius:999px;padding:3px 9px;font-size:var(--t-xs);font-weight:600}
+.badge b i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.hero h1{font-size:var(--t-3xl);font-weight:600}
+.hero h1 .w{display:inline-block;animation:word .9s var(--ease) both}
+.hero h1 .hl{position:relative;color:var(--accent);white-space:nowrap}
+.hero h1 .hl svg{position:absolute;left:-2%;bottom:-.14em;width:104%;height:.36em;overflow:visible}
+.hero h1 .hl path{fill:none;stroke:var(--gold);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:stroke 1.1s .9s var(--ease) forwards}
+.hero .lede{animation:up .9s .35s var(--ease) both}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;animation:up .9s .45s var(--ease) both}
+.svc-chips{display:flex;flex-wrap:wrap;gap:8px;animation:up .9s .55s var(--ease) both}
+.svc-chips .lbl{flex-basis:100%;font-size:var(--t-xs);color:var(--mute);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+@keyframes word{from{opacity:0;transform:translateY(.45em);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes stroke{to{stroke-dashoffset:0}}
+
+/* sahnə */
+.stage{--px:0;--py:0;position:relative;height:560px;max-width:100%}
+@media (max-width:980px){.stage{height:500px}}
+@media (max-width:520px){.stage{height:470px}}
+.plane-wrap{position:absolute;inset:-12% -18% -18% -10%;perspective:1100px;pointer-events:none;mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%);-webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 45%,transparent 78%)}
+.plane{position:absolute;inset:0;transform:rotateX(calc(50deg + var(--py)*-5deg)) rotateZ(calc(-16deg + var(--px)*5deg)) scale(1.05);transform-origin:50% 55%;transition:transform .6s var(--ease)}
+.plane canvas{width:100%;height:100%;display:block}
+.fl{position:absolute;--d:1;transform:translate3d(calc(var(--px)*var(--d)*14px),calc(var(--py)*var(--d)*14px),0);transition:transform .6s var(--ease);z-index:2}
+.fl>.in{background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;animation:bob 7s ease-in-out infinite,pop .8s var(--ease) both}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@keyframes pop{from{opacity:0;scale:.92}to{opacity:1;scale:1}}
+.fl .k{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:var(--t-xs);color:var(--mute);font-weight:600}
+.fl .tag{font:500 .65rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 7px;white-space:nowrap}
+.f-dead{top:0;left:0;width:228px;--d:1.6}
+.f-dead .in{animation-delay:0s,.5s}
+.f-bal{top:42px;right:0;width:262px;--d:2.2}
+.f-bal .in{animation-delay:-2s,.65s}
+.f-srv{top:236px;left:18px;width:236px;--d:1.2}
+.f-srv .in{animation-delay:-4s,.8s}
+.f-vat{top:300px;right:24px;width:236px;--d:1.9}
+.f-vat .in{animation-delay:-1s,.95s}
+.f-toast{bottom:12px;left:0;--d:2.6;max-width:calc(100% - 8px)}
+.f-toast .in{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;animation-delay:-3s,1.1s}
+@media (max-width:520px){
+  .f-dead,.f-srv{left:0;width:calc(50% - 6px)}
+  .f-bal,.f-vat{right:0;width:calc(50% - 6px)}
+  .f-bal{top:0}
+  .f-srv,.f-vat{top:186px}
+  .fl>.in{padding:12px}
+  .vat-row{flex-direction:column;align-items:flex-start}
+}
+.big{font:600 2rem/1 var(--f-display);letter-spacing:-.03em;margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.big small{font:500 var(--t-sm) var(--f-body);color:var(--mute);letter-spacing:0;margin-left:4px}
+.sub{font-size:var(--t-xs);color:var(--mute)}
+.bar{height:6px;border-radius:6px;background:var(--sunk);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;border-radius:6px;background:var(--accent);transition:width .8s var(--ease)}
+.rows{display:grid;gap:7px;margin-top:10px;font-size:var(--t-sm)}
+.rows div{display:flex;justify-content:space-between;gap:10px}
+.rows span{color:var(--mute)}
+.rows b{font:500 var(--t-sm) var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.diff{margin-top:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 8px;padding:8px 10px;border-radius:10px;font:600 var(--t-xs) var(--f-body);transition:background .3s,color .3s}
+.diff.ok{background:var(--ok-soft);color:var(--ok)}
+.diff.open{background:var(--gold-soft);color:var(--gold-ink)}
+.diff b{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.srv-top{display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:600;font-size:var(--t-sm)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);color:var(--ok);flex:none}
+.spark{width:100%;height:46px;display:block;margin-top:8px}
+.spark path.l{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.spark path.a{fill:color-mix(in srgb,var(--accent) 14%,transparent)}
+.spark circle{fill:var(--accent)}
+.vat-row{display:flex;align-items:center;gap:14px;margin-top:10px}
+.donut{width:76px;height:76px;flex:none}
+.donut circle{fill:none;stroke-width:9}
+.donut .bg{stroke:var(--sunk)}
+.donut .net{stroke:var(--accent)}
+.donut .vat{stroke:var(--gold);transition:stroke-dasharray .8s var(--ease),stroke-dashoffset .8s var(--ease)}
+.donut text{font:600 13px var(--f-display);fill:var(--ink);text-anchor:middle}
+.legend{display:grid;gap:4px;font-size:var(--t-xs);min-width:0;width:100%}
+.legend div{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.legend i{width:8px;height:8px;border-radius:2px;flex:none}
+.legend b{font:500 var(--t-xs) var(--f-mono);margin-left:auto;padding-left:8px}
+.toast-ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.toast-ico.done{background:var(--ok-soft);color:var(--ok)}
+#toastTxt{font-size:var(--t-sm);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- lent ---------- */
+.tape{border-block:1px solid var(--line);background:var(--surface);overflow:hidden}
+.tape-track{display:flex;width:max-content;animation:marquee 50s linear infinite}
+.tape:hover .tape-track{animation-play-state:paused}
+.tape ul{display:flex;list-style:none;margin:0;padding:0}
+.tape li{display:flex;align-items:center;gap:10px;padding:16px 26px;font-size:var(--t-sm);color:var(--mute);white-space:nowrap}
+.tape li::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--gold);transform:rotate(45deg)}
+.tape li b{color:var(--ink);font-weight:600}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- bölmələr ---------- */
+.band{padding-block:clamp(64px,9vw,112px)}
+.band.white{background:var(--surface);border-block:1px solid var(--line)}
+
+/* bento xidmətlər */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:16px;align-content:start;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;scroll-margin-top:90px;min-width:0}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.card:target{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft),var(--shadow)}
+.card.c3{grid-column:span 3}.card.c2{grid-column:span 2}
+@media (max-width:1060px){.card.c3,.card.c2{grid-column:span 3}.card.c2:last-child{grid-column:span 6}}
+@media (max-width:680px){.bento{grid-template-columns:minmax(0,1fr)}.card.c3,.card.c2,.card.c2:last-child{grid-column:auto}}
+.card-h{display:flex;align-items:center;gap:12px}
+.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.ic svg{width:22px;height:22px}
+.ic.gold{background:var(--gold-soft);color:var(--gold-ink)}
+.ic.ok{background:var(--ok-soft);color:var(--ok)}
+.ic.warn{background:var(--warn-soft);color:var(--warn)}
+.ic.ink{background:var(--sunk);color:var(--ink)}
+.card h3{font-size:var(--t-xl)}
+.card-h .idx{margin-left:auto;font:500 var(--t-xs) var(--f-mono);color:var(--mute)}
+.card p.d{color:var(--mute);font-size:var(--t-sm);max-width:52ch}
+.feats{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.feats li{font-size:.78rem;font-weight:500;padding:5px 10px;border-radius:8px;background:var(--sunk)}
+.card .more{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:var(--t-sm);font-weight:600;color:var(--accent);text-decoration:none}
+.card .more span{transition:transform .25s var(--ease)}
+.card .more:hover span{transform:translateX(3px)}
+.viz{background:var(--sunk);border-radius:14px;padding:14px;min-height:150px;position:relative;overflow:hidden}
+
+/* viz: mühasibatlıq */
+.ledger-mini{display:grid;gap:6px;font:500 .74rem var(--f-mono)}
+.ledger-mini .h,.ledger-mini .r{display:grid;grid-template-columns:34px minmax(0,1fr) 72px 72px 14px;gap:8px;align-items:center}
+.ledger-mini .h{color:var(--mute);font:600 .64rem var(--f-body);letter-spacing:.06em;text-transform:uppercase;padding:0 8px 4px;border-bottom:1px solid var(--line)}
+.ledger-mini .r{background:var(--surface);border-radius:8px;padding:7px 8px;animation:row-in 6s var(--ease) infinite both}
+.ledger-mini .r:nth-child(3){animation-delay:.5s}.ledger-mini .r:nth-child(4){animation-delay:1s}.ledger-mini .r:nth-child(5){animation-delay:1.5s}
+.ledger-mini .r em{font-style:normal;color:var(--mute);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:var(--f-body)}
+.ledger-mini .n{text-align:right;font-variant-numeric:tabular-nums}
+.ledger-mini .ck{color:var(--ok)}
+@keyframes row-in{0%{opacity:0;transform:translateX(-10px)}8%,88%{opacity:1;transform:none}100%{opacity:0}}
+@media (max-width:420px){.ledger-mini .h,.ledger-mini .r{grid-template-columns:30px minmax(0,1fr) 64px 64px}.ledger-mini .ck,.ledger-mini .h span:last-child{display:none}}
+
+/* viz: vergi */
+.steps-mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;position:relative}
+.steps-mini::before{content:"";position:absolute;left:16%;right:16%;top:15px;height:3px;border-radius:3px;background:var(--line)}
+.steps-mini::after{content:"";position:absolute;left:16%;top:15px;height:3px;border-radius:3px;background:var(--accent);width:68%;transform-origin:left;animation:prog 6s var(--ease) infinite}
+.steps-mini div{position:relative;z-index:1;display:grid;justify-items:center;gap:8px;text-align:center;font-size:.72rem;font-weight:600}
+.steps-mini i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--line);font:600 .72rem var(--f-mono);color:var(--mute);animation:stepc 6s infinite}
+.steps-mini div:nth-child(2) i{animation-delay:1.6s}.steps-mini div:nth-child(3) i{animation-delay:3.2s}
+@keyframes prog{0%{transform:scaleX(0)}55%,90%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+@keyframes stepc{0%,8%{border-color:var(--line);color:var(--mute);background:var(--surface)}14%,92%{border-color:var(--accent);color:var(--on-accent);background:var(--accent)}100%{border-color:var(--line);background:var(--surface);color:var(--mute)}}
+.rates{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.rate{flex:1 1 90px;background:var(--surface);border-radius:10px;padding:10px 12px}
+.rate b{display:block;font:600 1.4rem/1.1 var(--f-display);letter-spacing:-.02em}
+.rate span{font-size:.72rem;color:var(--mute)}
+
+/* viz: server */
+.rack-mini{display:grid;gap:6px}
+.u{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:8px;padding:8px 10px;font:500 .72rem var(--f-mono)}
+.u .leds{display:flex;gap:4px}
+.u .leds i{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:blink 1.4s steps(2,jump-none) infinite}
+.u .leds i:nth-child(2){background:var(--accent);animation-duration:.9s}
+.u .leds i:nth-child(3){animation-duration:2.3s}
+.u span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u b{margin-left:auto;color:var(--ok);font-weight:500}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.sync{margin-top:10px;font:500 .72rem var(--f-mono);color:var(--mute)}
+.sync-bar{height:6px;border-radius:6px;background:var(--surface);overflow:hidden;margin-top:6px}
+.sync-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--accent),var(--ok));transform-origin:left;animation:sync 4s var(--ease) infinite}
+@keyframes sync{0%{transform:scaleX(0)}70%,100%{transform:scaleX(1)}}
+
+/* viz: təhlükəsizlik */
+.radar-wrap{display:flex;align-items:center;gap:16px}
+.radar{position:relative;width:118px;height:118px;flex:none;border-radius:50%;background:radial-gradient(circle,transparent 30%,var(--line) 31%,transparent 32%,transparent 60%,var(--line) 61%,transparent 62%),var(--surface);overflow:hidden}
+.radar::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,color-mix(in srgb,var(--ok) 40%,transparent),transparent 70deg);animation:spin 3s linear infinite}
+.radar svg{position:absolute;inset:34px;color:var(--ok)}
+.radar .blip{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--warn);animation:blip 3s infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes blip{0%,20%{opacity:0;scale:.3}30%{opacity:1;scale:1.2}60%{opacity:.7;scale:1}100%{opacity:0}}
+.blocked{display:grid;gap:4px;min-width:0}
+.blocked b{font:600 1.7rem/1 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.blocked span{font-size:.72rem;color:var(--mute)}
+
+/* viz: özəl sistemlər */
+.mini-dash{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px}
+.mini-side{display:grid;gap:6px;align-content:start}
+.mini-side i{display:block;width:26px;height:8px;border-radius:4px;background:var(--line)}
+.mini-side i:first-child{background:var(--accent)}
+.mini-main{display:grid;gap:8px;min-width:0}
+.mini-kpi{display:flex;gap:6px}
+.mini-kpi div{flex:1;min-width:0;background:var(--surface);border-radius:8px;padding:6px 8px;font:600 .8rem var(--f-mono)}
+.mini-kpi span{display:block;font:500 .6rem var(--f-body);color:var(--mute)}
+.mini-bars{display:flex;align-items:flex-end;gap:5px;height:62px;background:var(--surface);border-radius:8px;padding:8px}
+.mini-bars i{flex:1;border-radius:3px 3px 0 0;background:color-mix(in srgb,var(--accent) 40%,var(--surface));transform-origin:bottom;animation:barg 5s var(--ease) infinite}
+.mini-bars i:last-child{background:var(--accent)}
+@keyframes barg{0%{transform:scaleY(.1)}30%,85%{transform:scaleY(1)}100%{transform:scaleY(.1)}}
+
+/* ---------- bir komanda (venn) ---------- */
+.trio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+@media (max-width:900px){.trio{grid-template-columns:minmax(0,1fr)}}
+.venn{width:100%;max-width:470px;height:auto;justify-self:center;overflow:visible}
+.venn circle{stroke-width:1.5}
+.venn .c1{fill:color-mix(in srgb,var(--accent) 12%,transparent);stroke:var(--accent);animation:vf1 9s ease-in-out infinite}
+.venn .c2{fill:color-mix(in srgb,var(--gold) 16%,transparent);stroke:var(--gold);animation:vf2 9s ease-in-out infinite}
+.venn .c3{fill:color-mix(in srgb,var(--ok) 12%,transparent);stroke:var(--ok);animation:vf3 9s ease-in-out infinite}
+@keyframes vf1{50%{transform:translate(-5px,-4px)}}
+@keyframes vf2{50%{transform:translate(5px,-4px)}}
+@keyframes vf3{50%{transform:translate(0,6px)}}
+.venn text{font:600 15px var(--f-display);fill:var(--ink);text-anchor:middle}
+.venn text.s{font:500 11px var(--f-body);fill:var(--mute)}
+.venn .core{fill:var(--ink)}
+.venn text.core-t{fill:var(--surface);font:700 12px var(--f-display)}
+.points{display:grid;gap:12px;margin-top:28px}
+.point{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:16px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.point i{grid-row:1/3;width:12px;height:12px;border-radius:4px;margin-top:6px}
+.point b{font-weight:600}
+.point span{color:var(--mute);font-size:var(--t-sm)}
+
+/* ---------- proses ---------- */
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}
+.flow li{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:10px;align-content:start}
+.flow .st{display:flex;align-items:center;justify-content:space-between}
+.flow .st span:last-child{font:500 var(--t-xs) var(--f-mono);color:var(--mute)}
+.flow h3{font-size:var(--t-lg)}
+.flow p{color:var(--mute);font-size:var(--t-sm)}
+.flow li:not(:last-child)::after{content:"";position:absolute;top:44px;right:-17px;width:18px;height:2px;background:var(--accent);z-index:1}
+.flow .out{font-size:.78rem;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:6px 10px;justify-self:start}
+@media (max-width:980px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.flow li:nth-child(2)::after{display:none}}
+@media (max-width:600px){.flow{grid-template-columns:minmax(0,1fr)}.flow li::after{display:none}}
+
+/* ---------- monitorinq paneli ---------- */
+.monitor{background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.mon-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.mon-top .t{font-weight:600}
+.mon-top .tag{font:500 .68rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:4px 9px}
+.mon-top .live{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:var(--t-xs);color:var(--ok);font-weight:600}
+.mon-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;background:var(--line)}
+.mon-grid>div{background:var(--surface);padding:20px;min-width:0}
+.m-gauges{grid-column:span 5}.m-uptime{grid-column:span 7}.m-log{grid-column:span 7}.m-checks{grid-column:span 5}
+@media (max-width:900px){.m-gauges,.m-uptime,.m-log,.m-checks{grid-column:span 12}}
+.m-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.m-h b{font-size:var(--t-sm);font-weight:600}
+.m-h span{font-size:var(--t-xs);color:var(--mute)}
+.gauges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.gauge{display:grid;justify-items:center;gap:6px;font-size:var(--t-xs);color:var(--mute);font-weight:600}
+.gauge svg{width:100%;max-width:96px;height:auto}
+.gauge circle{fill:none;stroke-width:8;stroke-linecap:round}
+.gauge .bg{stroke:var(--sunk)}
+.gauge .fg{stroke:var(--accent);transition:stroke-dashoffset .9s var(--ease)}
+.gauge .fg.g{stroke:var(--gold)}
+.gauge .fg.o{stroke:var(--ok)}
+.gauge text{font:600 16px var(--f-display);fill:var(--ink);text-anchor:middle}
+.uptime{display:flex;gap:3px;height:44px;align-items:stretch}
+.uptime i{flex:1;border-radius:3px;background:var(--ok);opacity:.85;transform-origin:bottom;animation:barg2 .8s var(--ease) both}
+.uptime i.p{background:var(--gold)}
+@keyframes barg2{from{transform:scaleY(0)}}
+.up-foot{display:flex;justify-content:space-between;margin-top:8px;font-size:.72rem;color:var(--mute)}
+.up-stats{display:flex;gap:24px;margin-top:16px;flex-wrap:wrap}
+.up-stats div{display:grid}
+.up-stats b{font:600 1.35rem var(--f-display);letter-spacing:-.02em}
+.up-stats span{font-size:.72rem;color:var(--mute)}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:6px;align-content:start;font:400 .78rem/1.45 var(--f-mono);height:228px;overflow:hidden}
+.log li{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;background:var(--bg);animation:logi .5s var(--ease) both}
+.log li time{color:var(--mute)}
+.log li .lv{font-weight:500;font-size:.68rem;padding:1px 6px;border-radius:4px}
+.lv.ok{background:var(--ok-soft);color:var(--ok)}
+.lv.bl{background:var(--gold-soft);color:var(--gold-ink)}
+.lv.in{background:var(--accent-soft);color:var(--accent)}
+.log li span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@keyframes logi{from{opacity:0;transform:translateY(-8px)}}
+.toggles{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.toggles li{display:flex;align-items:center;gap:12px;font-size:var(--t-sm);font-weight:500}
+.toggles li span{flex:1;min-width:0}
+.toggles li small{display:block;color:var(--mute);font-size:.74rem;font-weight:400}
+.sw{width:38px;height:22px;border-radius:999px;background:var(--ok);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+
+/* ---------- kalkulyator + təqvim ---------- */
+.tools{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:900px){.tools{grid-template-columns:minmax(0,1fr)}}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,2.6vw,28px);display:grid;gap:18px;align-content:start;min-width:0}
+.tool h3{font-size:var(--t-xl)}
+.seg{display:inline-flex;background:var(--sunk);border-radius:12px;padding:4px;gap:4px;justify-self:start;flex-wrap:wrap}
+.seg button{border:0;background:transparent;font:600 var(--t-sm) var(--f-body);color:var(--mute);padding:8px 14px;border-radius:9px;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+.pane{display:grid;gap:16px}
+.fieldrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:480px){.fieldrow{grid-template-columns:minmax(0,1fr)}}
+.fld{display:grid;gap:6px;min-width:0}
+.fld label{font-size:var(--t-xs);font-weight:600;color:var(--mute)}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:500 var(--t-md) var(--f-body);transition:border-color .2s,box-shadow .2s}
+.fld input.amt{font:600 1.15rem var(--f-mono);font-variant-numeric:tabular-nums}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.fld textarea{min-height:110px;resize:vertical}
+.result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:480px){.result{grid-template-columns:minmax(0,1fr)}}
+.res{background:var(--bg);border-radius:14px;padding:12px 14px;display:grid;gap:2px;min-width:0}
+.res span{font-size:var(--t-xs);color:var(--mute);font-weight:600}
+.res b{font:600 1.15rem var(--f-mono);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.res.hi{background:var(--accent);color:var(--on-accent)}
+.res.hi span{color:color-mix(in srgb,var(--on-accent) 80%,transparent)}
+.split{height:12px;border-radius:6px;overflow:hidden;display:flex;background:var(--sunk)}
+.split i{display:block;height:100%;transition:width .6s var(--ease)}
+.split .a{background:var(--accent)}.split .b{background:var(--gold)}
+.fine{font-size:.74rem;color:var(--mute)}
+.calgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center;font-size:var(--t-sm)}
+.calgrid .wd{font-size:.66rem;font-weight:600;color:var(--mute);padding-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.calgrid .dd{aspect-ratio:1;max-width:100%;display:grid;place-items:center;border-radius:10px;font-variant-numeric:tabular-nums}
+.calgrid .dd.today{outline:1.5px solid var(--ink);outline-offset:-1.5px;font-weight:700}
+.calgrid .dd.dl{background:var(--accent);color:var(--on-accent);font-weight:700;animation:dlp 2.4s ease-in-out infinite}
+.calgrid .dd.dl.g{background:var(--gold)}
+.calgrid .dd.past{color:color-mix(in srgb,var(--mute) 55%,transparent)}
+@keyframes dlp{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 18%,transparent)}}
+.cal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cal-nav{display:flex;align-items:center;gap:8px}
+.cal-nav b{font:600 var(--t-md) var(--f-display);min-width:118px;text-align:center}
+.cal-nav button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:1rem;color:var(--ink)}
+.cal-nav button:hover{border-color:var(--ink)}
+.dl-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.dl-list li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--bg)}
+.dl-list .dt{width:46px;height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--line);display:grid;place-content:center;line-height:1.1;text-align:center}
+.dl-list .dt b{font:700 1.05rem var(--f-display)}
+.dl-list .dt span{font-size:.6rem;color:var(--mute);text-transform:uppercase;font-weight:600}
+.dl-list .nm{font-size:var(--t-sm);font-weight:600}
+.dl-list .nm small{display:block;font-weight:500;color:var(--mute);font-size:.74rem}
+.dl-list .left{font:600 .72rem var(--f-mono);color:var(--accent);background:var(--accent-soft);padding:4px 8px;border-radius:999px;white-space:nowrap}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,64px)}
+@media (max-width:900px){.faq{grid-template-columns:minmax(0,1fr)}}
+.acc{display:grid;gap:10px}
+.acc details{background:var(--bg);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .2s,box-shadow .2s,background .2s}
+.acc details[open]{background:var(--surface);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:var(--shadow-sm)}
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;font-weight:600}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary i{font-style:normal;width:28px;height:28px;border-radius:8px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .3s var(--ease),background .2s}
+.acc details[open] summary i{transform:rotate(45deg);background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.acc details p{padding:0 20px 18px;color:var(--mute);font-size:var(--t-sm);max-width:68ch;animation:up .4s var(--ease)}
+
+/* ---------- CTA zolağı ---------- */
+.cta-band{position:relative;overflow:hidden;background:var(--accent);color:var(--on-accent);border-radius:28px;padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+@media (max-width:760px){.cta-band{grid-template-columns:minmax(0,1fr)}.cta-band .btn{justify-self:start}}
+.cta-band::before{content:"";position:absolute;inset:0;background-image:linear-gradient(color-mix(in srgb,var(--on-accent) 12%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--on-accent) 12%,transparent) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(90deg,transparent,#000);-webkit-mask-image:linear-gradient(90deg,transparent,#000);pointer-events:none}
+.cta-band h2{font-size:var(--t-2xl);position:relative;max-width:22ch}
+.cta-band p{position:relative;margin-top:12px;color:color-mix(in srgb,var(--on-accent) 85%,transparent);max-width:52ch}
+.cta-band .btn{position:relative;background:var(--surface);color:var(--accent-ink)}
+
+/* ---------- əlaqə ---------- */
+.contact{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,64px);align-items:start}
+@media (max-width:900px){.contact{grid-template-columns:minmax(0,1fr)}}
+.info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0 0}
+@media (max-width:480px){.info{grid-template-columns:minmax(0,1fr)}}
+.info>div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:4px;align-content:start;min-width:0}
+.info dt{font-size:var(--t-xs);color:var(--mute);font-weight:600}
+.info dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.copy{justify-self:start;margin-top:4px;background:var(--sunk);border:0;color:var(--ink);border-radius:8px;padding:5px 10px;font:600 .72rem var(--f-body);cursor:pointer}
+.copy:hover{background:var(--accent-soft);color:var(--accent)}
+form.req{background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:560px){form.req{grid-template-columns:minmax(0,1fr)}}
+.fld.wide{grid-column:1/-1}
+.svc-pick{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;border:0;margin:0;padding:0}
+.svc-pick legend{font-size:var(--t-xs);font-weight:600;color:var(--mute);margin-bottom:8px;padding:0}
+.svc-pick label{cursor:pointer;position:relative}
+.svc-pick input{position:absolute;opacity:0;pointer-events:none}
+.svc-pick span{display:inline-flex;padding:8px 12px;border-radius:10px;border:1px solid var(--line);font-size:var(--t-sm);font-weight:500;transition:background .2s,border-color .2s,color .2s}
+.svc-pick input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.svc-pick input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.form-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.status{font-size:var(--t-sm);color:var(--mute)}
+.status.good{color:var(--ok)}
+.status.bad{color:var(--warn)}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:color-mix(in srgb,var(--surface) 72%,transparent);padding-block:56px 32px}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));gap:32px}
+@media (max-width:860px){.f-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.f-grid{grid-template-columns:minmax(0,1fr)}}
+footer .brand{color:var(--surface)}
+footer .brand .mk{background:var(--accent)}
+footer h4{font:600 var(--t-sm) var(--f-body);color:var(--surface);margin-bottom:12px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:var(--t-sm)}
+footer a{text-decoration:none}
+footer a:hover{color:var(--surface)}
+footer p{font-size:var(--t-sm);margin-top:14px;max-width:34ch}
+.f-bot{margin-top:40px;padding-top:20px;border-top:1px solid color-mix(in srgb,var(--surface) 14%,transparent);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:var(--t-xs)}
+
+/* scroll ilə görünmə (dəstəklənməyəndə hər şey sadəcə görünür) */
+@supports (animation-timeline:view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 20%}
+  @keyframes rv{from{opacity:.3;transform:translateY(30px) scale(.985)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero h1 .hl path{stroke-dashoffset:0}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Hamilton.az ana səhifə">
+      <span class="mk"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14M15 3v14M5 10h10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M2 10h16" stroke="#D9981F" stroke-width="1.2" stroke-dasharray="1.5 2" fill="none"/></svg></span>
+      <span>Hamilton<em>.az</em></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menyu</button>
+    <nav class="nav" id="nav" aria-label="Əsas menyu">
+      <a class="lnk" href="#xidmetler">Xidmətlər</a>
+      <a class="lnk" href="#yanasma">Yanaşma</a>
+      <a class="lnk" href="#monitorinq">Server</a>
+      <a class="lnk" href="#aletler">Kalkulyator</a>
+      <a class="lnk" href="#suallar">Suallar</a>
+      <a class="lnk" href="#elaqe">Əlaqə</a>
+      <a class="btn btn-primary" href="#elaqe">Konsultasiya al <span class="arr">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-label="Giriş">
+    <!--
+      HIGGSFIELD VİDEO YERİ (istəyə bağlı)
+      Higgsfield-də yaratdığınız fon videonu (MP4, səssiz, 8–10 san loop) .stage içində .plane-wrap-ın yerinə qoya bilərsiniz:
+      <video class="hero-video" src="assets/hamilton-hero.mp4" autoplay muted loop playsinline></video>
+    -->
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="badge"><b><i class="pulse"></i>Bakı</b>Vergi konsultasiyası şirkəti</span>
+        <h1>
+          <span class="w">Rəqəmləriniz</span>
+          <span class="w hl" style="animation-delay:.08s">balansda,<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 120 4, 197 11"/></svg></span>
+          <span class="w" style="animation-delay:.16s">sistemləriniz</span>
+          <span class="w" style="animation-delay:.24s">qorunur.</span>
+        </h1>
+        <p class="lede">Hamilton.az mühasibatlıq, vergi konsultasiyası, 1C və server xidmətlərini bir müqavilə ilə aparır. Siz biznesinizlə məşğul olun, uçot və infrastruktur bizdədir.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#elaqe">Konsultasiya üçün müraciət <span class="arr">→</span></a>
+          <a class="btn btn-line" href="#xidmetler">Xidmətlərə bax</a>
+        </div>
+        <div class="svc-chips">
+          <span class="lbl">Xidmətlər</span>
+          <a class="chip" href="#s-muh"><i></i>Mühasibatlıq</a>
+          <a class="chip" href="#s-ver"><i style="background:var(--gold)"></i>Vergi konsultasiyası</a>
+          <a class="chip" href="#s-srv"><i style="background:var(--ok)"></i>Server və 1C</a>
+          <a class="chip" href="#s-sec"><i style="background:var(--warn)"></i>Server təhlükəsizliyi</a>
+          <a class="chip" href="#s-sys"><i style="background:var(--ink)"></i>Özəl uçot sistemləri</a>
+        </div>
+      </div>
+
+      <div class="stage" id="stage" aria-label="Canlı uçot animasiyası, nümunə məlumat">
+        <div class="plane-wrap" aria-hidden="true"><div class="plane"><canvas id="ledger"></canvas></div></div>
+
+        <div class="fl f-dead"><div class="in">
+          <div class="k"><span>Növbəti son tarix</span><span class="tag">Təqvim</span></div>
+          <div class="big" id="dDays">—</div>
+          <div class="sub" id="dName">ƏDV bəyannaməsi</div>
+          <div class="bar"><i id="dBar" style="width:20%"></i></div>
+        </div></div>
+
+        <div class="fl f-bal"><div class="in">
+          <div class="k"><span>İkili yazılış</span><span class="tag">Canlı</span></div>
+          <div class="rows">
+            <div><span>Debet</span><b id="bD">0,00 ₼</b></div>
+            <div><span>Kredit</span><b id="bK">0,00 ₼</b></div>
+          </div>
+          <div class="diff ok" id="bDiff"><span id="bLbl">Balans tutur ✓</span><b id="bVal">0,00 ₼</b></div>
+        </div></div>
+
+        <div class="fl f-srv"><div class="in">
+          <div class="k"><span>1C serveri</span><span class="tag">CPU</span></div>
+          <div class="srv-top"><i class="dot pulse"></i>İşləyir <span class="sub" style="margin-left:auto" id="cpuTxt">34%</span></div>
+          <svg class="spark" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true"><path class="a" id="spA"/><path class="l" id="spL"/></svg>
+          <div class="sub">Son ehtiyat nüsxə: 03:00</div>
+        </div></div>
+
+        <div class="fl f-vat"><div class="in">
+          <div class="k"><span>ƏDV hesabı</span><span class="tag">18%</span></div>
+          <div class="vat-row">
+            <svg class="donut" viewBox="0 0 80 80" aria-hidden="true">
+              <circle class="bg" cx="40" cy="40" r="32"/>
+              <circle class="net" cx="40" cy="40" r="32" transform="rotate(-90 40 40)"/>
+              <circle class="vat" id="vatArc" cx="40" cy="40" r="32" transform="rotate(-90 40 40)" stroke-dasharray="30.7 201.1" stroke-dashoffset="-170.4"/>
+              <text x="40" y="45">18%</text>
+            </svg>
+            <div class="legend">
+              <div><i style="background:var(--accent)"></i>Məbləğ<b id="vN">10 000</b></div>
+              <div><i style="background:var(--gold)"></i>ƏDV<b id="vV">1 800</b></div>
+              <div><i style="background:var(--ink)"></i>Cəmi<b id="vG">11 800</b></div>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="fl f-toast"><div class="in">
+          <span class="toast-ico" id="toastIco"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h6l3 3v9H4z"/><path d="M10 2v3h3"/></svg></span>
+          <span id="toastTxt">ƏDV bəyannaməsi hazırlanır…</span>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tape" aria-label="Əsas göstəricilər">
+    <div class="tape-track">
+      <ul>
+        <li>ƏDV <b>18%</b></li><li>Mənfəət vergisi <b>20%</b></li><li>ƏDV bəyannaməsi <b>hər ayın 20-dək</b></li><li>Mənfəət vergisi bəyannaməsi <b>31 martadək</b></li><li><b>e-taxes.gov.az</b> üzərindən təqdimat</li><li><b>1C:Mühasibat</b> quraşdırma və dəstək</li><li>Ehtiyat nüsxə <b>3-2-1</b></li><li><b>VPN · Firewall · Monitorinq</b></li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>ƏDV <b>18%</b></li><li>Mənfəət vergisi <b>20%</b></li><li>ƏDV bəyannaməsi <b>hər ayın 20-dək</b></li><li>Mənfəət vergisi bəyannaməsi <b>31 martadək</b></li><li><b>e-taxes.gov.az</b> üzərindən təqdimat</li><li><b>1C:Mühasibat</b> quraşdırma və dəstək</li><li>Ehtiyat nüsxə <b>3-2-1</b></li><li><b>VPN · Firewall · Monitorinq</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ================= XİDMƏTLƏR (BENTO) ================= -->
+  <section class="band" id="xidmetler">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div style="display:grid;gap:14px">
+          <span class="eyebrow">Xidmətlər</span>
+          <h2>Beş xidmət, bir məsul komanda</h2>
+        </div>
+        <p class="lede" style="max-width:44ch">Uçot, vergi və İT ayrı podratçılara bölünəndə səhvlər aralarda itir. Biz hamısını bir yerdə aparırıq.</p>
+      </header>
+
+      <div class="bento">
+        <article class="card c3 rv" id="s-muh">
+          <div class="card-h">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M8 8h1M8 12h1M15 8h1M15 12h1M8 16h8"/></svg></span>
+            <h3>Mühasibatlıq</h3><span class="idx">01 / 05</span>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <div class="ledger-mini">
+              <div class="h"><span>Hesab</span><span>Əməliyyat</span><span style="text-align:right">Debet</span><span style="text-align:right">Kredit</span><span></span></div>
+              <div class="r"><span>211</span><em>Satış (ƏDV ilə)</em><span class="n">11 800,00</span><span class="n"></span><span class="ck">✓</span></div>
+              <div class="r"><span>601</span><em>Satış gəliri</em><span class="n"></span><span class="n">10 000,00</span><span class="ck">✓</span></div>
+              <div class="r"><span>521</span><em>ƏDV öhdəliyi</em><span class="n"></span><span class="n">1 800,00</span><span class="ck">✓</span></div>
+              <div class="r"><span>223</span><em>Bankdan daxilolma</em><span class="n">11 800,00</span><span class="n"></span><span class="ck">✓</span></div>
+            </div>
+          </div>
+          <p class="d">İlkin sənəddən maliyyə hesabatına qədər bütün uçotu aparırıq. Siz sənədləri göndərirsiniz, ay sonunda hazır hesabat alırsınız.</p>
+          <ul class="feats"><li>İlkin sənədlərin uçotu</li><li>Əmək haqqı hesablanması</li><li>DSMF hesabatları</li><li>Bank və kassa uzlaşdırması</li><li>Maliyyə hesabatları</li></ul>
+          <a class="more" href="#elaqe" data-svc="Mühasibatlıq">Bu xidmət üçün müraciət <span>→</span></a>
+        </article>
+
+        <article class="card c3 rv" id="s-ver">
+          <div class="card-h">
+            <span class="ic gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M5 7h14M5 7l-3 7h6zM19 7l-3 7h6zM8 21h8"/></svg></span>
+            <h3>Vergi konsultasiyası</h3><span class="idx">02 / 05</span>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <div class="steps-mini">
+              <div><i>1</i>Hazırlanır</div>
+              <div><i>2</i>Yoxlanılır</div>
+              <div><i>3</i>e-taxes-ə göndərilir</div>
+            </div>
+            <div class="rates">
+              <div class="rate"><b>18%</b><span>ƏDV</span></div>
+              <div class="rate"><b>20%</b><span>Mənfəət vergisi</span></div>
+              <div class="rate"><b>20-si</b><span>ƏDV bəyannaməsi</span></div>
+            </div>
+          </div>
+          <p class="d">Vergi öhdəliklərinizi əvvəlcədən xəritələyirik, bəyannamələri vaxtında təqdim edirik və yoxlama zamanı yanınızda oluruq.</p>
+          <ul class="feats"><li>Bəyannamələr</li><li>Vergi riskləri</li><li>Yoxlamada müşayiət</li><li>Vergi rejiminin seçimi</li><li>Vergi orqanı ilə yazışma</li></ul>
+          <a class="more" href="#elaqe" data-svc="Vergi konsultasiyası">Bu xidmət üçün müraciət <span>→</span></a>
+        </article>
+
+        <article class="card c2 rv" id="s-srv">
+          <div class="card-h">
+            <span class="ic ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6"/></svg></span>
+            <h3>Server və 1C</h3><span class="idx">03 / 05</span>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <div class="rack-mini">
+              <div class="u"><span class="leds"><i></i><i></i><i></i></span><span>1C:Enterprise</span><b>işləyir</b></div>
+              <div class="u"><span class="leds"><i></i><i></i><i></i></span><span>SQL bazası</span><b>işləyir</b></div>
+              <div class="u"><span class="leds"><i></i><i></i><i></i></span><span>Fayl serveri</span><b>sinxron</b></div>
+            </div>
+            <div class="sync">1C bazası serverə köçürülür</div>
+            <div class="sync-bar"><i></i></div>
+          </div>
+          <p class="d">1C-ni qururuq, bazanı serverə köçürürük, istifadəçiləri təşkil edir və gündəlik dəstək veririk.</p>
+          <ul class="feats"><li>1C quraşdırma</li><li>Kliyent-server</li><li>Bulud / ofis</li><li>Yeniləmələr</li></ul>
+          <a class="more" href="#elaqe" data-svc="Server və 1C xidmətləri">Müraciət <span>→</span></a>
+        </article>
+
+        <article class="card c2 rv" id="s-sec">
+          <div class="card-h">
+            <span class="ic warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <h3>Server təhlükəsizliyi</h3><span class="idx">04 / 05</span>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <div class="radar-wrap">
+              <div class="radar">
+                <i class="blip" style="left:26%;top:30%"></i><i class="blip" style="left:70%;top:62%;animation-delay:1.4s"></i>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+              </div>
+              <div class="blocked"><b id="blk">1 284</b><span>bloklanmış giriş cəhdi<br>(nümunə sayğac)</span></div>
+            </div>
+          </div>
+          <p class="d">Serveri xaricdən bağlayır, ehtiyat nüsxələri ayrı saxlayır və hər hadisəni izləyirik.</p>
+          <ul class="feats"><li>Firewall</li><li>VPN</li><li>RDP qoruması</li><li>3-2-1 nüsxə</li></ul>
+          <a class="more" href="#elaqe" data-svc="Server təhlükəsizliyi">Müraciət <span>→</span></a>
+        </article>
+
+        <article class="card c2 rv" id="s-sys">
+          <div class="card-h">
+            <span class="ic ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 9l-2 2 2 2M15 9l2 2-2 2M8 21h8"/></svg></span>
+            <h3>Özəl uçot sistemləri</h3><span class="idx">05 / 05</span>
+          </div>
+          <div class="viz" aria-hidden="true">
+            <div class="mini-dash">
+              <div class="mini-side"><i></i><i></i><i></i><i></i></div>
+              <div class="mini-main">
+                <div class="mini-kpi"><div><span>Debitor</span>48 210</div><div><span>Kreditor</span>31 905</div></div>
+                <div class="mini-bars"><i style="height:45%"></i><i style="height:62%;animation-delay:.1s"></i><i style="height:50%;animation-delay:.2s"></i><i style="height:74%;animation-delay:.3s"></i><i style="height:92%;animation-delay:.4s"></i></div>
+              </div>
+            </div>
+          </div>
+          <p class="d">Uçot sistemini şirkətinizin proseslərinə görə yazırıq və 1C, bank məlumatları ilə birləşdiririk.</p>
+          <ul class="feats"><li>Texniki tapşırıq</li><li>İnteqrasiya</li><li>Real vaxt panel</li><li>Audit izi</li></ul>
+          <a class="more" href="#elaqe" data-svc="Özəl uçot sistemi">Müraciət <span>→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BİR KOMANDA ================= -->
+  <section class="band white">
+    <div class="wrap trio">
+      <svg class="venn rv" viewBox="0 0 420 380" role="img" aria-label="Uçot, vergi və İT sahələrinin kəsişməsində Hamilton.az">
+        <circle class="c1" cx="150" cy="140" r="110"/>
+        <circle class="c2" cx="270" cy="140" r="110"/>
+        <circle class="c3" cx="210" cy="240" r="110"/>
+        <text x="110" y="110">Uçot</text><text class="s" x="110" y="128">mühasibatlıq</text>
+        <text x="310" y="110">Vergi</text><text class="s" x="310" y="128">konsultasiya</text>
+        <text x="210" y="300">İT</text><text class="s" x="210" y="318">1C · server · təhlükəsizlik</text>
+        <circle class="core" cx="210" cy="172" r="38"/>
+        <text class="core-t" x="210" y="176">Hamilton</text>
+      </svg>
+      <div class="rv">
+        <span class="eyebrow">Niyə bir komanda</span>
+        <h2 class="h2">Uçot, vergi və server bir-birindən asılıdır</h2>
+        <p class="lede mt">Bəyannamə 1C-dəki məlumatdan yaranır, 1C isə serverdə işləyir. Biri dayananda o biriləri də dayanır.</p>
+        <div class="points">
+          <div class="point"><i style="background:var(--accent)"></i><b>Bir məsul komanda</b><span>Sualınız uçotla, vergi ilə və ya serverlə bağlı olsa da, eyni komandaya yazırsınız.</span></div>
+          <div class="point"><i style="background:var(--gold)"></i><b>Səhv aralarda itmir</b><span>Mühasib və İT mütəxəssisi eyni bazaya baxır, uyğunsuzluğu birlikdə həll edir.</span></div>
+          <div class="point"><i style="background:var(--ok)"></i><b>Məlumat qorunur</b><span>Maliyyə bazanız şifrəli kanalla əlçatandır və hər gecə ayrıca nüsxələnir.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROSES ================= -->
+  <section class="band" id="yanasma">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="eyebrow">Yanaşma</span>
+        <h2>Əməkdaşlıq dörd mərhələdə qurulur</h2>
+      </header>
+      <ol class="flow">
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><span>Mərhələ 1</span></div><h3>Diaqnostika</h3><p>Sənədləri, vergi tarixçəsini və server mühitini yoxlayırıq.</p><span class="out">Nəticə: risk siyahısı</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span>Mərhələ 2</span></div><h3>Plan</h3><p>Vergi təqvimi, uçot qaydaları və infrastruktur planını razılaşdırırıq.</p><span class="out">Nəticə: iş planı</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6-9 9H5v-6z"/></svg></span><span>Mərhələ 3</span></div><h3>Tətbiq</h3><p>Uçotu qaydaya salır, 1C-ni qurur, server qorunmasını tətbiq edirik.</p><span class="out">Nəticə: işlək sistem</span></li>
+        <li class="rv"><div class="st"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><span>Mərhələ 4</span></div><h3>Müşayiət</h3><p>Aylıq hesabat, bəyannamələr, monitorinq və yoxlamalarda dəstək.</p><span class="out">Nəticə: aylıq hesabat</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= MONİTORİNQ ================= -->
+  <section class="band white" id="monitorinq">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div style="display:grid;gap:14px">
+          <span class="eyebrow">1C və server</span>
+          <h2>Serverinizi gecə-gündüz izləyirik</h2>
+        </div>
+        <p class="lede" style="max-width:44ch">Müştəri serverinin vəziyyəti belə bir paneldə görünür. Aşağıdakı panel nümunə məlumatla işləyir.</p>
+      </header>
+      <div class="monitor rv">
+        <div class="mon-top"><span class="t">Server paneli</span><span class="tag">Nümunə məlumat</span><span class="live"><i class="dot pulse"></i>Canlı</span></div>
+        <div class="mon-grid">
+          <div class="m-gauges">
+            <div class="m-h"><b>Resurslar</b><span>avtomatik yenilənir</span></div>
+            <div class="gauges">
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg" id="gCpu" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="166"/><text x="50" y="56" id="gCpuT">34%</text></svg>CPU</div>
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg g" id="gRam" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="105"/><text x="50" y="56" id="gRamT">58%</text></svg>RAM</div>
+              <div class="gauge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="40"/><circle class="fg o" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" stroke-dasharray="251.3" stroke-dashoffset="95.5"/><text x="50" y="56">62%</text></svg>Disk</div>
+            </div>
+          </div>
+          <div class="m-uptime">
+            <div class="m-h"><b>Son 30 gün işləkliyi</b><span>hər zolaq bir gündür</span></div>
+            <div class="uptime" id="uptime"></div>
+            <div class="up-foot"><span>30 gün əvvəl</span><span>bu gün</span></div>
+            <div class="up-stats">
+              <div><b>29 / 30</b><span>tam işlək gün</span></div>
+              <div><b>03:00</b><span>gündəlik ehtiyat nüsxə</span></div>
+              <div><b>3 nüsxə</b><span>2 daşıyıcı, 1 kənarda</span></div>
+            </div>
+          </div>
+          <div class="m-log">
+            <div class="m-h"><b>Hadisələr jurnalı</b><span>yeni hadisələr yuxarıda</span></div>
+            <ul class="log" id="log"></ul>
+          </div>
+          <div class="m-checks">
+            <div class="m-h"><b>Qoruma tədbirləri</b><span>hamısı aktiv</span></div>
+            <ul class="toggles">
+              <li><span>Firewall<small>Yalnız lazımi portlar açıqdır</small></span><i class="sw"></i></li>
+              <li><span>VPN ilə giriş<small>Uzaqdan iş şifrəli kanalla</small></span><i class="sw"></i></li>
+              <li><span>RDP qoruması<small>Təkrarlanan cəhdlər bloklanır</small></span><i class="sw"></i></li>
+              <li><span>Ehtiyat nüsxə 3-2-1<small>Hər gecə 03:00</small></span><i class="sw"></i></li>
+              <li><span>Hüquq auditi<small>Rüblük yoxlama</small></span><i class="sw"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KALKULYATOR + TƏQVİM ================= -->
+  <section class="band" id="aletler">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="eyebrow">Alətlər</span>
+        <h2>Vergini hesablayın, son tarixi görün</h2>
+      </header>
+      <div class="tools">
+        <div class="tool rv">
+          <h3>Vergi kalkulyatoru</h3>
+          <div class="seg" role="tablist" aria-label="Kalkulyator növü">
+            <button role="tab" id="tabVat" aria-selected="true" aria-controls="calcVat">ƏDV 18%</button>
+            <button role="tab" id="tabPro" aria-selected="false" aria-controls="calcPro" tabindex="-1">Mənfəət vergisi 20%</button>
+          </div>
+
+          <div class="pane" id="calcVat" role="tabpanel" aria-labelledby="tabVat">
+            <div class="fieldrow">
+              <div class="fld"><label for="vAmt">Məbləğ, ₼</label><input class="amt" id="vAmt" inputmode="decimal" value="10 000"></div>
+              <div class="fld"><label for="vMode">Məbləğə ƏDV</label>
+                <select id="vMode"><option value="ex">daxil deyil (üstünə gəl)</option><option value="in">daxildir (içindən çıxar)</option></select>
+              </div>
+            </div>
+            <div class="result">
+              <div class="res"><span>ƏDV-siz</span><b id="rNet">10 000,00</b></div>
+              <div class="res"><span>ƏDV 18%</span><b id="rVat">1 800,00</b></div>
+              <div class="res hi"><span>Cəmi</span><b id="rGross">11 800,00</b></div>
+            </div>
+            <div class="split" aria-hidden="true"><i class="a" id="sA" style="width:84.7%"></i><i class="b" id="sB" style="width:15.3%"></i></div>
+          </div>
+
+          <div class="pane" id="calcPro" role="tabpanel" aria-labelledby="tabPro" hidden>
+            <div class="fieldrow">
+              <div class="fld"><label for="pInc">Gəlir, ₼</label><input class="amt" id="pInc" inputmode="decimal" value="250 000"></div>
+              <div class="fld"><label for="pExp">Çıxılan xərclər, ₼</label><input class="amt" id="pExp" inputmode="decimal" value="180 000"></div>
+            </div>
+            <div class="result">
+              <div class="res"><span>Vergi tutulan mənfəət</span><b id="pPro">70 000,00</b></div>
+              <div class="res"><span>Xalis mənfəət</span><b id="pNet">56 000,00</b></div>
+              <div class="res hi"><span>Mənfəət vergisi</span><b id="pTax">14 000,00</b></div>
+            </div>
+            <div class="split" aria-hidden="true"><i class="a" id="pA" style="width:80%"></i><i class="b" id="pB" style="width:20%"></i></div>
+          </div>
+          <p class="fine">Sadələşdirilmiş hesablamadır. Güzəştlər, azadolmalar və zərərin keçirilməsi nəzərə alınmır. Dəqiq hesab üçün bizimlə əlaqə saxlayın.</p>
+        </div>
+
+        <div class="tool rv">
+          <div class="cal-head">
+            <h3>Vergi təqvimi</h3>
+            <div class="cal-nav"><button type="button" id="calPrev" aria-label="Əvvəlki ay">‹</button><b id="calTitle">—</b><button type="button" id="calNext" aria-label="Növbəti ay">›</button></div>
+          </div>
+          <div class="calgrid" id="calGrid"></div>
+          <ul class="dl-list" id="dlList"></ul>
+          <p class="fine">Son tarix qeyri-iş gününə düşərsə, növbəti iş günü tətbiq olunur. Tarixləri taxes.gov.az üzrə yoxlayın.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="band white" id="suallar">
+    <div class="wrap faq">
+      <div class="rv">
+        <span class="eyebrow">Suallar</span>
+        <h2 class="h2">Tez-tez verilən suallar</h2>
+        <p class="lede mt">Cavabını tapmadığınız sual varsa, müraciət formasında yazın.</p>
+      </div>
+      <div class="acc rv">
+        <details open><summary>Hansı şirkətlərlə işləyirsiniz?<i aria-hidden="true">+</i></summary><p>Fərdi sahibkarlardan orta ölçülü şirkətlərə qədər. ƏDV ödəyicisi olan və olmayan, sadələşdirilmiş vergi rejimində işləyən bizneslərə xidmət göstəririk.</p></details>
+        <details><summary>Sənədləri necə təqdim edirəm?<i aria-hidden="true">+</i></summary><p>Elektron qaydada: e-poçt, paylaşılan qovluq və ya birbaşa 1C bazası vasitəsilə. Kağız sənədləri ofisə gətirmək də mümkündür.</p></details>
+        <details><summary>1C bazamız köhnə kompüterdədir. Serverə köçürmək olar?<i aria-hidden="true">+</i></summary><p>Bəli. Bazanın surətini çıxarırıq, yeni serverə və ya buluda köçürürük, istifadəçi hüquqlarını bərpa edir və ehtiyat nüsxəni qururuq. Köçürmə vaxtını iş dayanmasın deyə sizinlə razılaşdırırıq.</p></details>
+        <details><summary>Vergi yoxlaması gəlsə nə edirsiniz?<i aria-hidden="true">+</i></summary><p>Tələb olunan sənədləri hazırlayırıq, yoxlama zamanı sizi müşayiət edirik və yoxlama aktına cavab, lazım olduqda etiraz hazırlayırıq.</p></details>
+        <details><summary>Özəl uçot sisteminin hazırlanması nə qədər çəkir?<i aria-hidden="true">+</i></summary><p>Müddət tapşırığın həcmindən asılıdır. İlk görüşdən sonra proseslərinizi təhlil edib mərhələli plan və müddət təqdim edirik.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA + ƏLAQƏ ================= -->
+  <section class="band" id="elaqe">
+    <div class="wrap" style="display:grid;gap:clamp(48px,7vw,88px)">
+      <div class="cta-band rv">
+        <div>
+          <h2>İlk görüşdə uçotunuza, vergi risklərinizə və serverinizə baxaq</h2>
+          <p>Görüşdən sonra nəyin təcili olduğunu və nəyin gözləyə biləcəyini yazılı şəkildə alırsınız.</p>
+        </div>
+        <a class="btn" href="#reqForm">Görüş təyin et <span class="arr">→</span></a>
+      </div>
+
+      <div class="contact">
+        <div class="rv">
+          <span class="eyebrow">Əlaqə</span>
+          <h2 class="h2">Vəziyyətinizi danışaq</h2>
+          <p class="lede mt">Qısa müraciət göndərin, iş günü ərzində sizinlə əlaqə saxlayaq.</p>
+          <dl class="info">
+            <div><dt>E-poçt</dt><dd id="mail">info@hamilton.az</dd><button class="copy" data-copy="mail" type="button">Kopyala</button></div>
+            <div><dt>Telefon</dt><dd id="phone">+994 12 000 00 00</dd><button class="copy" data-copy="phone" type="button">Kopyala</button></div>
+            <div><dt>Ünvan</dt><dd>Bakı, Azərbaycan</dd></div>
+            <div><dt>İş saatı</dt><dd>B.e. – Cümə, 09:00 – 18:00</dd></div>
+          </dl>
+        </div>
+
+        <form class="req rv" id="reqForm" novalidate>
+          <fieldset class="svc-pick">
+            <legend>Hansı xidmət lazımdır?</legend>
+            <label><input type="radio" name="service" id="sv1" value="Mühasibatlıq" checked><span>Mühasibatlıq</span></label>
+            <label><input type="radio" name="service" id="sv2" value="Vergi konsultasiyası"><span>Vergi konsultasiyası</span></label>
+            <label><input type="radio" name="service" id="sv3" value="Server və 1C xidmətləri"><span>Server və 1C</span></label>
+            <label><input type="radio" name="service" id="sv4" value="Server təhlükəsizliyi"><span>Təhlükəsizlik</span></label>
+            <label><input type="radio" name="service" id="sv5" value="Özəl uçot sistemi"><span>Özəl sistem</span></label>
+          </fieldset>
+          <div class="fld"><label for="f-name">Ad, soyad</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="fld"><label for="f-co">Şirkət</label><input id="f-co" name="company" autocomplete="organization"></div>
+          <div class="fld"><label for="f-tel">Telefon</label><input id="f-tel" name="phone" type="tel" autocomplete="tel" required placeholder="+994"></div>
+          <div class="fld"><label for="f-mail">E-poçt</label><input id="f-mail" name="email" type="email" autocomplete="email"></div>
+          <div class="fld wide"><label for="f-msg">Qısa məlumat</label><textarea id="f-msg" name="message" placeholder="Məsələn: 12 işçi, ƏDV ödəyicisi, 1C bazası ofis kompüterindədir"></textarea></div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Müraciəti göndər <span class="arr">→</span></button>
+            <span class="status" id="formStatus" role="status"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <a class="brand" href="#top"><span class="mk"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v14M15 3v14M5 10h10" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></span><span>Hamilton.az</span></a>
+        <p>Mühasibatlıq, vergi konsultasiyası, 1C və server xidmətləri. Bakı.</p>
+      </div>
+      <div><h4>Xidmətlər</h4><ul><li><a href="#s-muh">Mühasibatlıq</a></li><li><a href="#s-ver">Vergi konsultasiyası</a></li><li><a href="#s-srv">Server və 1C</a></li><li><a href="#s-sec">Server təhlükəsizliyi</a></li><li><a href="#s-sys">Özəl uçot sistemləri</a></li></ul></div>
+      <div><h4>Şirkət</h4><ul><li><a href="#yanasma">Yanaşma</a></li><li><a href="#monitorinq">Server paneli</a></li><li><a href="#aletler">Kalkulyator</a></li><li><a href="#suallar">Suallar</a></li></ul></div>
+      <div><h4>Əlaqə</h4><ul><li>info@hamilton.az</li><li>+994 12 000 00 00</li><li>B.e. – Cümə, 09:00 – 18:00</li></ul></div>
+    </div>
+    <div class="f-bot"><span>© <span id="yr">2026</span> Hamilton.az</span><span>Vergi konsultasiyası və mühasibatlıq</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avqust","sentyabr","oktyabr","noyabr","dekabr"];
+  var MONTHS_T = ["Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr"];
+  var MON_S = ["yan","fev","mar","apr","may","iyn","iyl","avq","sen","okt","noy","dek"];
+  var $ = function(id){ return document.getElementById(id); };
+  $("yr").textContent = new Date().getFullYear();
+
+  function fmt(n, dec){
+    dec = dec == null ? 2 : dec;
+    var neg = n < 0; n = Math.abs(n);
+    var s = n.toFixed(dec).split("."), i = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return (neg ? "−" : "") + i + (dec ? "," + s[1] : "");
+  }
+  function parseNum(v){ var n = parseFloat(String(v).replace(/[\s ]/g,"").replace(",", ".")); return isFinite(n) ? n : 0; }
+
+  /* ---------- menyu ---------- */
+  var menuBtn = $("menuBtn"), nav = $("nav");
+  function closeNav(){ nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); menuBtn.textContent = "Menyu"; }
+  menuBtn.addEventListener("click", function(){ var o = nav.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", o); menuBtn.textContent = o ? "Bağla" : "Menyu"; });
+  nav.addEventListener("click", function(e){ if (e.target.closest("a")) closeNav(); });
+
+  /* ---------- xidmət kartından formaya ---------- */
+  document.querySelectorAll("[data-svc]").forEach(function(a){
+    a.addEventListener("click", function(){
+      document.querySelectorAll('.svc-pick input').forEach(function(r){ if (r.value === a.dataset.svc) r.checked = true; });
+    });
+  });
+
+  /* ---------- son tarixlər ---------- */
+  var now0 = new Date(), today = new Date(now0.getFullYear(), now0.getMonth(), now0.getDate());
+  function deadlinesIn(y, m){
+    var out = [{ day:20, t:"ƏDV bəyannaməsi və ödənişi", s:"Hər ayın 20-dək", g:false }];
+    if (m % 3 === 0) out.push({ day:20, t:"Ödəmə mənbəyindən vergi bəyannaməsi", s:"Rübdən sonrakı ayın 20-dək", g:false });
+    if (m === 2) out.push({ day:31, t:"Mənfəət vergisi illik bəyannaməsi", s:"İldən sonrakı ilin 31 martınadək", g:true });
+    return out.map(function(x){ x.d = new Date(y, m, x.day); return x; });
+  }
+  function upcoming(n){
+    var res = [];
+    for (var i=0; i<15; i++){
+      var dt = new Date(today.getFullYear(), today.getMonth()+i, 1);
+      deadlinesIn(dt.getFullYear(), dt.getMonth()).forEach(function(x){ if (x.d >= today) res.push(x); });
+    }
+    return res.sort(function(a,b){ return a.d-b.d; }).slice(0,n);
+  }
+  function daysLeft(d){ return Math.round((d - today)/86400000); }
+  var up = upcoming(4), first = up[0], dl0 = daysLeft(first.d);
+  $("dDays").innerHTML = dl0 === 0 ? "Bu gün" : dl0 + "<small>gün qalıb</small>";
+  $("dName").textContent = first.t + " · " + first.d.getDate() + " " + MONTHS[first.d.getMonth()];
+  $("dBar").style.width = Math.max(6, 100 - dl0/31*100).toFixed(0) + "%";
+  $("dlList").innerHTML = up.map(function(x){
+    var n = daysLeft(x.d);
+    return '<li><span class="dt"><b>'+x.d.getDate()+'</b><span>'+MON_S[x.d.getMonth()]+'</span></span><span class="nm">'+x.t+'<small>'+x.s+'</small></span><span class="left">'+(n===0?"bu gün":n+" gün")+'</span></li>';
+  }).join("");
+
+  var calY = first.d.getFullYear(), calM = first.d.getMonth();
+  function renderCal(){
+    $("calTitle").textContent = MONTHS_T[calM] + " " + calY;
+    var html = ["B.e","Ç.a","Çər","C.a","Cüm","Şən","Baz"].map(function(w){ return '<span class="wd">'+w+'</span>'; }).join("");
+    var startDow = (new Date(calY, calM, 1).getDay() + 6) % 7, days = new Date(calY, calM+1, 0).getDate(), map = {};
+    deadlinesIn(calY, calM).forEach(function(x){ var k = x.day; map[k] = map[k] ? { t: map[k].t + " · " + x.t, g: map[k].g || x.g } : { t:x.t, g:x.g }; });
+    for (var i=0;i<startDow;i++) html += "<span></span>";
+    for (var d=1; d<=days; d++){
+      var dt = new Date(calY, calM, d), cls = "dd";
+      if (+dt === +today) cls += " today";
+      if (dt < today) cls += " past";
+      if (map[d]) cls += " dl" + (map[d].g ? " g" : "");
+      html += '<span class="'+cls+'"'+(map[d] ? ' title="'+map[d].t+'"' : '')+'>'+d+'</span>';
+    }
+    $("calGrid").innerHTML = html;
+  }
+  renderCal();
+  $("calPrev").addEventListener("click", function(){ calM--; if (calM<0){ calM=11; calY--; } renderCal(); });
+  $("calNext").addEventListener("click", function(){ calM++; if (calM>11){ calM=0; calY++; } renderCal(); });
+
+  /* ---------- kalkulyator ---------- */
+  var tabV = $("tabVat"), tabP = $("tabPro");
+  function selTab(v){
+    tabV.setAttribute("aria-selected", v); tabP.setAttribute("aria-selected", !v);
+    tabV.tabIndex = v ? 0 : -1; tabP.tabIndex = v ? -1 : 0;
+    $("calcVat").hidden = !v; $("calcPro").hidden = v;
+  }
+  tabV.addEventListener("click", function(){ selTab(true); });
+  tabP.addEventListener("click", function(){ selTab(false); });
+  [tabV, tabP].forEach(function(t){ t.addEventListener("keydown", function(e){ if (e.key==="ArrowRight"||e.key==="ArrowLeft"){ e.preventDefault(); var toVat = t===tabP; selTab(toVat); (toVat?tabV:tabP).focus(); } }); });
+  function calcVat(){
+    var a = Math.max(0, parseNum($("vAmt").value)), inc = $("vMode").value === "in", net, vat, gross;
+    if (inc){ gross = a; net = Math.round(a/1.18*100)/100; vat = Math.round((gross-net)*100)/100; }
+    else { net = a; vat = Math.round(a*0.18*100)/100; gross = Math.round((net+vat)*100)/100; }
+    $("rNet").textContent = fmt(net); $("rVat").textContent = fmt(vat); $("rGross").textContent = fmt(gross);
+    var pa = gross ? net/gross*100 : 100/1.18; $("sA").style.width = pa + "%"; $("sB").style.width = (100-pa) + "%";
+  }
+  function calcPro(){
+    var inc = Math.max(0, parseNum($("pInc").value)), exp = Math.max(0, parseNum($("pExp").value));
+    var pro = Math.max(0, inc-exp), tax = Math.round(pro*0.2*100)/100;
+    $("pPro").textContent = fmt(pro); $("pTax").textContent = fmt(tax); $("pNet").textContent = fmt(pro-tax);
+    $("pA").style.width = pro ? "80%" : "100%"; $("pB").style.width = pro ? "20%" : "0%";
+  }
+  ["vAmt","vMode"].forEach(function(id){ $(id).addEventListener("input", calcVat); $(id).addEventListener("change", calcVat); });
+  ["pInc","pExp"].forEach(function(id){ $(id).addEventListener("input", calcPro); });
+  ["vAmt","pInc","pExp"].forEach(function(id){ $(id).addEventListener("blur", function(){ var n = parseNum(this.value); this.value = fmt(n, n % 1 ? 2 : 0); }); });
+  calcVat(); calcPro();
+
+  /* ---------- monitorinq ---------- */
+  var uh = "";
+  for (var u=0; u<30; u++) uh += '<i'+(u===11?' class="p" title="Planlı texniki iş"':'')+' style="animation-delay:'+(u*0.02)+'s"></i>';
+  $("uptime").innerHTML = uh;
+  var LOGS = [
+    ["ok","Ehtiyat nüsxə tamamlandı · 1C bazası"],
+    ["bl","RDP: təkrarlanan uğursuz giriş cəhdi bloklandı"],
+    ["in","VPN: mühasib-02 qoşuldu"],
+    ["ok","1C serveri: yeniləmə yoxlanıldı"],
+    ["in","Disk: 62% dolu · xəbərdarlıq həddi 85%"],
+    ["bl","Firewall: xaricdən 3389 portuna sorğu rədd edildi"],
+    ["ok","SQL bazası: indekslər yeniləndi"],
+    ["in","VPN: direktor qoşuldu"]
+  ];
+  var LV = { ok:"OK", bl:"BLOK", in:"INFO" };
+  var logEl = $("log"), li = 0;
+  function hms(d){ return [d.getHours(), d.getMinutes(), d.getSeconds()].map(function(x){ return String(x).padStart(2,"0"); }).join(":"); }
+  function pushLog(t){
+    var l = LOGS[li++ % LOGS.length], el = document.createElement("li");
+    el.innerHTML = '<time>'+hms(t)+'</time><span class="lv '+l[0]+'">'+LV[l[0]]+'</span><span>'+l[1]+'</span>';
+    logEl.insertBefore(el, logEl.firstChild);
+    while (logEl.children.length > 6) logEl.removeChild(logEl.lastChild);
+  }
+  var nowMs = Date.now();
+  for (var k=5;k>=0;k--) pushLog(new Date(nowMs - k*47000));
+  var blk = 1284;
+
+  /* ---------- hero kartları ---------- */
+  var sparkData = []; for (var s=0;s<24;s++) sparkData.push(30 + Math.sin(s/2)*8 + Math.random()*8);
+  function drawSpark(){
+    var w = 200, h = 46, n = sparkData.length;
+    var pts = sparkData.map(function(v,i){ return [i/(n-1)*w, h - 3 - (v/80)*(h-6)]; });
+    var d = pts.map(function(p,i){ return (i?"L":"M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join(" ");
+    $("spL").setAttribute("d", d); $("spA").setAttribute("d", d + " L200 46 L0 46 Z");
+    var cpu = Math.round(sparkData[n-1]); $("cpuTxt").textContent = cpu + "%";
+    $("gCpu").setAttribute("stroke-dashoffset", (251.3*(1-cpu/100)).toFixed(1)); $("gCpuT").textContent = cpu + "%";
+  }
+  drawSpark();
+
+  var VAT_SAMPLES = [10000, 2450, 38600, 7125], vi = 0, CIRC = 2*Math.PI*32;
+  function showVat(){
+    var n = VAT_SAMPLES[vi++ % VAT_SAMPLES.length], v = Math.round(n*0.18*100)/100, g = n + v, frac = v/g;
+    $("vN").textContent = fmt(n, n%1?2:0); $("vV").textContent = fmt(v, v%1?2:0); $("vG").textContent = fmt(g, g%1?2:0);
+    var arc = $("vatArc"); arc.setAttribute("stroke-dasharray", (CIRC*frac).toFixed(1) + " " + CIRC.toFixed(1)); arc.setAttribute("stroke-dashoffset", (-(CIRC*(1-frac))).toFixed(1));
+  }
+  showVat();
+
+  var DOC_ICO = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h6l3 3v9H4z"/><path d="M10 2v3h3"/></svg>';
+  var OK_ICO = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>';
+  var TOASTS = [["Məlumatlar 1C ilə tutuşdurulur…",0],["Bəyannamə e-taxes.gov.az-a göndərildi",1],["Bank çıxarışı uçota alındı",1],["ƏDV bəyannaməsi hazırlanır…",0]], ti = 0;
+  function nextToast(){
+    var t = TOASTS[ti++ % TOASTS.length], txt = $("toastTxt"), ico = $("toastIco");
+    txt.textContent = t[0]; ico.classList.toggle("done", !!t[1]); ico.innerHTML = t[1] ? OK_ICO : DOC_ICO;
+    if (txt.animate) txt.animate([{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:400,easing:"ease-out"});
+  }
+
+  if (!reduce){
+    setInterval(function(){
+      sparkData.shift(); sparkData.push(Math.max(8, Math.min(72, sparkData[sparkData.length-1] + (Math.random()-.5)*14))); drawSpark();
+      var ram = 52 + Math.round(Math.random()*10); $("gRam").setAttribute("stroke-dashoffset", (251.3*(1-ram/100)).toFixed(1)); $("gRamT").textContent = ram + "%";
+    }, 1800);
+    setInterval(showVat, 4200);
+    setInterval(nextToast, 3200);
+    setInterval(function(){ pushLog(new Date()); }, 2600);
+    setInterval(function(){ blk += 1 + (Math.random()*3|0); $("blk").textContent = fmt(blk,0); }, 1500);
+  }
+
+  /* ---------- parallax ---------- */
+  var stage = $("stage");
+  if (!reduce && matchMedia("(pointer:fine)").matches){
+    stage.addEventListener("pointermove", function(e){
+      var r = stage.getBoundingClientRect();
+      stage.style.setProperty("--px", ((e.clientX - r.left)/r.width*2 - 1).toFixed(3));
+      stage.style.setProperty("--py", ((e.clientY - r.top)/r.height*2 - 1).toFixed(3));
+    });
+    stage.addEventListener("pointerleave", function(){ stage.style.setProperty("--px",0); stage.style.setProperty("--py",0); });
+  }
+
+  /* ---------- kopyala / forma ---------- */
+  document.querySelectorAll(".copy").forEach(function(b){
+    b.addEventListener("click", function(){
+      var el = $(b.dataset.copy), txt = el.textContent.trim();
+      function sel(){ var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Seçildi"; }
+      try { navigator.clipboard.writeText(txt).then(function(){ b.textContent = "Kopyalandı"; setTimeout(function(){ b.textContent = "Kopyala"; }, 1600); }, sel); } catch(e){ sel(); }
+    });
+  });
+  var form = $("reqForm"), st = $("formStatus");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = form.elements.name.value.trim(), tel = form.elements.phone.value.trim();
+    if (!name || tel.replace(/\D/g,"").length < 9){
+      st.className = "status bad";
+      st.textContent = !name ? "Adınızı yazın." : "Telefon nömrəsini tam yazın (ən azı 9 rəqəm).";
+      (!name ? form.elements.name : form.elements.phone).focus(); return;
+    }
+    /* TODO: fetch("/api/muraciet", { method:"POST", body:new FormData(form) }) ilə öz serverinizə göndərin */
+    st.className = "status good";
+    st.textContent = "Forma yoxlanıldı. Şablon rejimində müraciət hələ heç bir ünvana göndərilmir.";
+  });
+
+  /* ---------- HERO: perspektivdə ikili yazılış vərəqi ---------- */
+  var cv = $("ledger"); if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext("2d"), css = getComputedStyle(document.documentElement);
+  function tok(n){ return css.getPropertyValue(n).trim(); }
+  var COL = { ink:tok("--ink"), mute:tok("--mute"), line:tok("--line"), accent:tok("--accent"), gold:tok("--gold"), ok:tok("--ok"), surface:tok("--surface") };
+  var MONO = '"IBM Plex Mono", ui-monospace, Menlo, monospace', BODY = '"Plus Jakarta Sans", system-ui, sans-serif';
+  var W=0,H=0,dpr=1,rowH=30,offset=0,rows=[],x0=0,cols=[];
+  var D=0,K=0,shownD=0,shownK=0;
+  function rnd(a,b){ return a + Math.random()*(b-a); }
+  function cents(v){ return Math.round(v*100); }
+  // Azərbaycan hesablar planı üzrə real ikili yazılış nümunələri
+  function entry(){
+    var r = Math.random(), N, V, out;
+    if (r < .3){ N = cents(rnd(800,24000)); V = Math.round(N*.18);
+      out = [{op:"Satış",acc:"211",dt:N+V},{op:"",acc:"601",kt:N},{op:"",acc:"521",kt:V,vat:1}];
+    } else if (r < .52){ N = cents(rnd(500,16000)); V = Math.round(N*.18);
+      out = [{op:"Material alışı",acc:"201",dt:N},{op:"",acc:"241",dt:V,vat:1},{op:"",acc:"531",kt:N+V}];
+    } else if (r < .72){ N = cents(rnd(1000,30000)); out = [{op:"Bankdan daxilolma",acc:"223",dt:N},{op:"",acc:"211",kt:N}];
+    } else if (r < .88){ N = cents(rnd(150,6000)); out = [{op:"İnzibati xərc",acc:"721",dt:N},{op:"",acc:"531",kt:N}];
+    } else { N = cents(rnd(400,9000)); out = [{op:"Vergi ödənişi",acc:"521",dt:N},{op:"",acc:"223",kt:N}]; }
+    out.forEach(function(x,i){ x.flash=0; x.done=false; x.last = i===out.length-1; });
+    return out;
+  }
+  function fill(){ while (rows.length < Math.ceil(H/rowH)+6) rows = rows.concat(entry()); }
+  function layout(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = cv.offsetWidth; H = cv.offsetHeight; if (!W || !H) return;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+    var widths = [150, 64, 120, 120], total = widths.reduce(function(a,b){ return a+b; }, 0);
+    x0 = Math.max(24, (W-total)/2);
+    var x = x0; cols = widths.map(function(w){ var c = {x:x, w:w}; x += w; return c; });
+    fill();
+  }
+  function fmtC(c){ return fmt(c/100); }
+  function draw(dt){
+    if (!W) return;
+    offset += dt*22;
+    while (offset >= rowH){ offset -= rowH; rows.shift(); fill(); }
+    ctx.clearRect(0,0,W,H);
+    var top = 70, endX = cols[3].x + cols[3].w, balY = Math.round(H*.56);
+
+    ctx.globalAlpha = 1; ctx.fillStyle = COL.surface; ctx.strokeStyle = COL.line; ctx.lineWidth = 1;
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x0-18, 20, endX-x0+36, H-20, 18); else ctx.rect(x0-18, 20, endX-x0+36, H-20);
+    ctx.fill(); ctx.stroke();
+    cols.slice(1).forEach(function(c){ ctx.beginPath(); ctx.moveTo(c.x+.5, top-30); ctx.lineTo(c.x+.5, H); ctx.stroke(); });
+
+    ctx.textBaseline = "middle";
+    for (var i=0;i<rows.length;i++){
+      var y = top + i*rowH - offset + rowH/2; if (y < top+4 || y > H+rowH) continue;
+      var r = rows[i], fade = Math.min(1,(y-top)/60) * Math.min(1,(H-y)/80); if (fade <= 0) continue;
+      if (!r.done && y <= balY){ r.done = true; r.flash = 1; if (r.dt) D += r.dt; if (r.kt) K += r.kt; }
+      if (r.flash > 0){
+        ctx.globalAlpha = .14*r.flash*fade; ctx.fillStyle = r.vat ? COL.gold : COL.accent;
+        ctx.fillRect(x0-10, y-rowH/2+2, endX-x0+20, rowH-4);
+      }
+      if (r.last){ ctx.globalAlpha = .9*fade; ctx.strokeStyle = COL.line; ctx.beginPath(); ctx.moveTo(x0-10, y+rowH/2+.5); ctx.lineTo(endX+10, y+rowH/2+.5); ctx.stroke(); }
+      ctx.globalAlpha = .88*fade;
+      ctx.font = "600 12px " + BODY; ctx.fillStyle = COL.ink; ctx.textAlign = "left";
+      if (r.op) ctx.fillText(r.op, cols[0].x, y);
+      ctx.font = "500 12px " + MONO; ctx.fillStyle = r.vat ? COL.gold : COL.mute;
+      ctx.fillText((r.dt ? "Dt " : "Kt ") + r.acc, cols[1].x+8, y);
+      ctx.textAlign = "right"; ctx.fillStyle = r.flash > .3 ? (r.vat ? COL.gold : COL.accent) : COL.ink;
+      if (r.dt) ctx.fillText(fmtC(r.dt), cols[2].x+cols[2].w-10, y);
+      if (r.kt) ctx.fillText(fmtC(r.kt), cols[3].x+cols[3].w-10, y);
+      if (r.done && r.last){ ctx.fillStyle = COL.ok; ctx.textAlign = "left"; ctx.font = "700 13px " + BODY; ctx.fillText("✓", endX+16, y); }
+      if (r.flash > 0) r.flash = Math.max(0, r.flash - dt*1.2);
+    }
+    ctx.globalAlpha = 1; ctx.fillStyle = COL.surface; ctx.fillRect(x0-17, 21, endX-x0+34, top-21);
+    ctx.font = "600 11px " + BODY; ctx.fillStyle = COL.mute; ctx.textAlign = "left";
+    ctx.fillText("ƏMƏLİYYAT", cols[0].x, top-22); ctx.fillText("HESAB", cols[1].x+8, top-22);
+    ctx.textAlign = "right"; ctx.fillText("DEBET", cols[2].x+cols[2].w-10, top-22); ctx.fillText("KREDİT", cols[3].x+cols[3].w-10, top-22);
+    ctx.strokeStyle = COL.ink; ctx.beginPath(); ctx.moveTo(x0-10, top-6.5); ctx.lineTo(endX+10, top-6.5); ctx.stroke();
+    ctx.strokeStyle = COL.gold; ctx.lineWidth = 2; ctx.setLineDash([6,5]);
+    ctx.beginPath(); ctx.moveTo(x0-30, balY); ctx.lineTo(endX+30, balY); ctx.stroke(); ctx.setLineDash([]); ctx.lineWidth = 1;
+    ctx.fillStyle = COL.gold; ctx.font = "700 11px " + BODY; ctx.textAlign = "left"; ctx.fillText("BALANS XƏTTİ", x0-28, balY-12);
+
+    shownD += (D - shownD)*Math.min(1, dt*6); shownK += (K - shownK)*Math.min(1, dt*6);
+  }
+  var lastUI = 0;
+  function updateUI(t){
+    if (t - lastUI < 120) return; lastUI = t;
+    $("bD").textContent = fmtC(Math.round(shownD)) + " ₼"; $("bK").textContent = fmtC(Math.round(shownK)) + " ₼";
+    var diff = D - K, box = $("bDiff");
+    if (diff === 0){ box.className = "diff ok"; $("bLbl").textContent = "Balans tutur ✓"; $("bVal").textContent = "0,00 ₼"; }
+    else { box.className = "diff open"; $("bLbl").textContent = "Yazılış davam edir"; $("bVal").textContent = fmtC(Math.abs(diff)) + " ₼"; }
+  }
+  var last = 0, running = false, raf = 0;
+  function loop(t){ if (!running) return; var dt = last ? Math.min(.05,(t-last)/1000) : 0; last = t; draw(dt); updateUI(t); raf = requestAnimationFrame(loop); }
+  function start(){ if (running || reduce) return; running = true; last = 0; raf = requestAnimationFrame(loop); }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+  layout();
+  // ilk kadr: vərəq artıq dolu və balansda görünsün
+  for (var z=0; z<40; z++) draw(1/20);
+  for (var g=0; g<200 && D !== K; g++) draw(1/20);
+  shownD = D; shownK = K; updateUI(1e9); lastUI = 0;
+  var rt; window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(function(){ layout(); draw(0); }, 120); });
+  if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ es[0].isIntersecting ? start() : stop(); }).observe(stage); else start();
+  document.addEventListener("visibilitychange", function(){ document.hidden ? stop() : start(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ draw(0); });
+})();
+</script>
+
+</body>
+</html>
