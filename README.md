@@ -77,7 +77,16 @@ Spama qarşı forma iki qoruma işlədir: gizli `website` sahəsi (honeypot) və
 
 ## Deploy
 
-### A. Öz serveriniz (VPS: nginx + Node) — tövsiyə olunur
+### Coolify (hazırkı server)
+
+Sayt Coolify-da `Dockerfile` ilə qurulur (build pack: Dockerfile, port 3000):
+- Mənbə: `https://github.com/Kadimoff/hamilton` (açıq repo), branch `main`
+- Domenlər: `https://hamilton.az`, `https://www.hamilton.az` — sertifikatı Traefik (Let's Encrypt) alır
+- Mühit dəyişənləri Coolify → Application → Environment Variables bölməsindədir (`SMTP_*`, `MAIL_FROM`, `MAIL_TO`)
+- Yeniləmə: `git push` → Coolify-da **Redeploy** (və ya webhook ilə avtomatik)
+- Sağlamlıq yoxlaması: `GET /api/health`
+
+### A. Öz serveriniz (VPS: nginx + Node)
 
 Serverdə Node 22+ və nginx olmalıdır.
 
